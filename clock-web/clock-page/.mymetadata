@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-module
+  type="WEB"
+  name="clock-page Maven Webapp"
+  id="myeclipse.1486878696686"
+  context-root="/clock-page"
+  j2ee-spec="1.7"
+  archive="clock-page Maven Webapp.war">
+  <attributes>
+    <attribute name="webrootdir" value="src/main/webapp" />
+  </attributes>
+</project-module>
+

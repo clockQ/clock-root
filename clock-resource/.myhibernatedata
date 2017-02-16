@@ -1,0 +1,24 @@
+#MyEclipse Hibernate Properties
+#Sun Feb 12 17:19:21 CST 2017
+sessionFactoryName=
+genBasicCompId=true
+profile=
+daoSFId=
+version=3.3
+jndiPath=
+detectM2M=false
+reStrategyClass=
+detectO2O=false
+springDaoFile=
+useJavaTypes=true
+keyGenerator=native
+libInstallFolder=
+addLibs2Project=false
+genVersionTag=false
+sessionFactoryId=
+basePersistenceClass=
+genAnnotations=true
+reSettingsFile=/clock-resource/hibernate.reveng.xml
+configFile=/clock-resource/src/main/java/hibernate.cfg.xml
+createConfigFile=false
+addLibs2Classpath=false
