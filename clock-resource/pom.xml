@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<project
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+	xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>clock-root</artifactId>
+		<groupId>com.clock</groupId>
+		<version>1.0</version>
+	</parent>
+	<artifactId>clock-resource</artifactId>
+	<name>clock-resource</name>
+	
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+
+	<!-- 从父工程添加依赖jar -->
+	<dependencies>
+		<!-- oracle驱动 -->
+		<dependency>
+		    <groupId>com.oracle</groupId>   
+	   		<artifactId>ojdbc6</artifactId>   
+		</dependency>
+		<!-- hibernate4 -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+		</dependency>
+	</dependencies>
+</project>

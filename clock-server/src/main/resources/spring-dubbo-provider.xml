@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans  
+			http://www.springframework.org/schema/beans/spring-beans.xsd  
+			http://code.alibabatech.com/schema/dubbo  
+			http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<!-- 提供方应用信息，用于依赖关系 -->
+	<dubbo:application name="clock-bs-provider" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="127.0.0.1:6060" />
+	<!--使用multicast广播注册中心暴露服务地址 -->
+	<!--<dubbo:registry address="multicast://10.57.41.19:1234" /> -->
+	<!-- 配置监控的服务地址和IP -->
+	<!-- <dubbo:monitor address="127.0.0.1:7070"/> --><!-- 暂时没配置 -->
+
+	<!-- 用dubbo协议在20880端口暴露服务 -->
+	<dubbo:protocol name="dubbo" port="26060" />
+
+	<!-- 发布这个服务 -->
+	<dubbo:service interface="org.clock.bs.api.IBsCompanySV"
+		ref="bsCompanySV" />
+
+</beans>  
