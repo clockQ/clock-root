@@ -18,7 +18,7 @@
         http://www.springframework.org/schema/util/spring-util.xsd
         ">
 	<!-- ******* 导入外部数据库的properties文件 ***** -->
-	<context:property-placeholder location="classpath:local.common.properties" />
+	<context:property-placeholder location="classpath:utils.common.properties" />
 
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
