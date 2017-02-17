@@ -1,12 +1,3 @@
-.settings/
-clock-api/.settings/
-clock-resource/.settings/
-clock-server/.settings/
-clock-utils/.settings/
-clock-web/.settings/
-clock-web/clcok-controller/.settings/
-clock-web/clock-page/.settings/
-
 clock-api/target/
 clock-resource/target/
 clock-server/target/

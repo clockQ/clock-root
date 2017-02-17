@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-modules id="moduleCoreId" project-version="1.7.0">
+    <wb-module deploy-name="clcok-controller Maven Webapp">
+        <wb-resource deploy-path="/" source-path="/src/main/webapp"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
+        <dependent-module archiveName="clock-resource-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/clock-resource/clock-resource">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="clock-api-1.0.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/clock-api/clock-api">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <property name="context-root" value="/clcok-controller"/>
+        <property name="java-output-path" value="/clcok-controller Maven Webapp/src/main/webapp/WEB-INF/classes"/>
+    </wb-module>
+</project-modules>
