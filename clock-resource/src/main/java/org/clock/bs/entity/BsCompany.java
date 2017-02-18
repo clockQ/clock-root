@@ -72,4 +72,11 @@ public class BsCompany implements Serializable {
 		this.phone = phone;
 	}
 
+	@Override
+	public String toString() {
+		return "BsCompany [companyId=" + companyId + ", companyName="
+				+ companyName + ", email=" + email + ", password=" + password
+				+ ", phone=" + phone + "]";
+	}
+
 }

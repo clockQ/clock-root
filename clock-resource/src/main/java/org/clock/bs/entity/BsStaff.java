@@ -103,4 +103,12 @@ public class BsStaff implements Serializable {
 		this.username = username;
 	}
 
+	@Override
+	public String toString() {
+		return "BsStaff [staffId=" + staffId + ", companyId=" + companyId
+				+ ", companyName=" + companyName + ", email=" + email
+				+ ", leave=" + leave + ", password=" + password + ", phone="
+				+ phone + ", username=" + username + "]";
+	}
+
 }

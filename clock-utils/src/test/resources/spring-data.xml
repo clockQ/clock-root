@@ -18,7 +18,7 @@
         http://www.springframework.org/schema/util/spring-util.xsd
         ">
 	<!-- ******* 导入外部数据库的properties文件 ***** -->
-	<context:property-placeholder location="classpath:dev.common.properties" />
+	<context:property-placeholder location="classpath:test.common.properties" />
 
 	<!-- 配置数据源 -->
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
@@ -71,48 +71,4 @@
 			</props>
 		</property>
 	</bean>
-
-	<!--添加JPA事务管理器 -->
-	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-		<property name="entityManagerFactory" ref="entityManager" />
-	</bean>
-
-	<tx:advice id="txAdvice" transaction-manager="txManager">
-		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="add*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-			<tx:method name="create*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="insert*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="update*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="merge*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="del*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-			<tx:method name="remove*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="put*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
-			<tx:method name="clear*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-			<tx:method name="copy*" propagation="REQUIRED"
-				rollback-for="java.lang.Exception" />
-
-			<!-- For Hibernate4, otherwise, session cannot found error occurs -->
-			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="count*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="find*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="list*" propagation="REQUIRED" read-only="true" />
-			<tx:method name="*" propagation="SUPPORTS" read-only="true" />
-		</tx:attributes>
-	</tx:advice>
-	
-	<aop:aspectj-autoproxy expose-proxy="true"/>
-	
-	<aop:config expose-proxy="true">
-        <aop:pointcut id="service" expression="execution(* org.clock..service..*.*(..)))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="service"/>
-    </aop:config>
-    
 </beans>
