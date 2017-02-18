@@ -6,8 +6,8 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class StartDubboServer {
 	//启动Dubbo服务的入口函数
 	public static void main(String[] args) throws Exception {    
-		//只加载本工程的spring和dubbo配置文件,加载全部路径的spring-data.xml
-		String[] locations = {"classpath:applicationContext.xml","classpath:spring-dubbo-provider.xml","classpath*:spring-data.xml"};
+		//加载配置文件
+		String[] locations = {"classpath:applicationContext.xml","classpath:spring-dubbo-provider.xml","classpath:spring-data.xml"};
 		try{
 			ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(locations);
 			context.start();    
