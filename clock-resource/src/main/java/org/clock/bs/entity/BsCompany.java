@@ -1,61 +1,45 @@
 package org.clock.bs.entity;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.SEQUENCE;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import java.io.Serializable;
+import javax.persistence.*;
+import java.math.BigDecimal;
+
 
 /**
- * BsCompany entity. @author MyEclipse Persistence Tools
+ * The persistent class for the BS_COMPANY database table.
+ * 
  */
 @Entity
-@Table(name = "BS_COMPANY", schema = "BSSYS")
-public class BsCompany implements java.io.Serializable {
+@Table(name="BS_COMPANY")
+public class BsCompany implements Serializable {
+	private static final long serialVersionUID = 1L;
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4690393462402805944L;
-	// Fields
-
-	private Long companyId;
-	private String companyName;
-	private String password;
-	private String email;
-	private Long phone;
-
-	// Constructors
-
-	/** default constructor */
-	public BsCompany() {
-	}
-
-	/** full constructor */
-	public BsCompany(String companyName, String password, String email,
-			Long phone) {
-		this.companyName = companyName;
-		this.password = password;
-		this.email = email;
-		this.phone = phone;
-	}
-
-	// Property accessors
-	@SequenceGenerator(name = "generator")
 	@Id
-	@GeneratedValue(strategy = SEQUENCE, generator = "generator")
-	@Column(name = "COMPANY_ID", unique = true, nullable = false, precision = 12, scale = 0)
-	public Long getCompanyId() {
+	@SequenceGenerator(name="BS_COMPANY_COMPANYID_GENERATOR", sequenceName="BS_STAFF$SEQ")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BS_COMPANY_COMPANYID_GENERATOR")
+	@Column(name="COMPANY_ID")
+	private long companyId;
+
+	@Column(name="COMPANY_NAME")
+	private String companyName;
+
+	private String email;
+
+	private String password;
+
+	private BigDecimal phone;
+
+    public BsCompany() {
+    }
+
+	public long getCompanyId() {
 		return this.companyId;
 	}
 
-	public void setCompanyId(Long companyId) {
+	public void setCompanyId(long companyId) {
 		this.companyId = companyId;
 	}
 
-	@Column(name = "COMPANY_NAME", length = 20)
 	public String getCompanyName() {
 		return this.companyName;
 	}
@@ -64,16 +48,6 @@ public class BsCompany implements java.io.Serializable {
 		this.companyName = companyName;
 	}
 
-	@Column(name = "PASSWORD", length = 40)
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-	@Column(name = "EMAIL", length = 50)
 	public String getEmail() {
 		return this.email;
 	}
@@ -82,20 +56,20 @@ public class BsCompany implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "PHONE", precision = 12, scale = 0)
-	public Long getPhone() {
+	public String getPassword() {
+		return this.password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public BigDecimal getPhone() {
 		return this.phone;
 	}
 
-	public void setPhone(Long phone) {
+	public void setPhone(BigDecimal phone) {
 		this.phone = phone;
-	}
-
-	@Override
-	public String toString() {
-		return "BsCompany [companyId=" + companyId + ", companyName="
-				+ companyName + ", password=" + password + ", email=" + email
-				+ ", phone=" + phone + "]";
 	}
 
 }
