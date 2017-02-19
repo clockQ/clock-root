@@ -9,7 +9,7 @@
 		<version>1.0</version>
 	</parent>
 	<artifactId>clock-utils</artifactId>
-	<name>clock-utils</name>
+	<name>${project.artifactId}</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -17,7 +17,7 @@
 		<!-- 子模块依赖 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>clock-resource</artifactId>
+			<artifactId>clock-pojo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>

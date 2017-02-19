@@ -1,7 +1,7 @@
-clock-api/target/
-clock-resource/target/
-clock-server/target/
+clock-pojo/target/
 clock-utils/target/
+clock-dubbo-api/target/
+clock-biz/target/
 clock-web/clcok-controller/target/
 clock-web/clock-page/target/
 

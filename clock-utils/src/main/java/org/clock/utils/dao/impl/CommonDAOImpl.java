@@ -38,7 +38,7 @@ public class CommonDAOImpl implements ICommonDAO{
 
 	@Override
 	public <T>T findById(Class<T> classType, long id) throws Exception {
-		return em.find(classType, id);
+		return em.find(classType,id);
 	}
 
 

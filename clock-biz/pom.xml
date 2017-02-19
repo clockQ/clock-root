@@ -8,8 +8,8 @@
 		<groupId>com.clock</groupId>
 		<version>1.0</version>
 	</parent>
-	<artifactId>clock-server</artifactId>
-	<name>clock-server</name>
+	<artifactId>clock-biz</artifactId>
+	<name>${project.artifactId}</name>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -17,7 +17,7 @@
 		<!-- 依赖模块 -->
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>clock-resource</artifactId>
+			<artifactId>clock-pojo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
@@ -27,10 +27,11 @@
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>clock-api</artifactId>
+			<artifactId>clock-dubbo-api</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<!-- dubbo,编译dubbx后自动生成在本地库中 -->
+		<!-- 自动引入相关的spring,版本有root模块控制 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>

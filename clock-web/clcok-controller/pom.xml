@@ -10,29 +10,25 @@
 	</parent>
 	<artifactId>clcok-controller</artifactId>
 	<packaging>war</packaging>
-	<name>clcok-controller Maven Webapp</name>
+	<name>${project.artifactId}</name>
 	<dependencies>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>clock-resource</artifactId>
+			<artifactId>clock-pojo</artifactId>
 			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>${project.groupId}</groupId>
-			<artifactId>clock-api</artifactId>
+			<artifactId>clock-dubbo-api</artifactId>
 			<version>${project.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-web</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>dubbo</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo-rpc-rest</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.101tec</groupId>

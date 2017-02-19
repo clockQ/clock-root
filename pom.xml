@@ -7,16 +7,16 @@
 	<artifactId>clock-root</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
-	<name>clock-root</name>
+	<name>${project.artifactId}</name>
 	<description>用于聚合的父工程</description>
 
 	<!-- 依赖聚合的子工程 -->
 	<modules>
-		<module>clock-web</module>
-		<module>clock-api</module>
-		<module>clock-server</module>
+		<module>clock-pojo</module>
 		<module>clock-utils</module>
-		<module>clock-resource</module>
+		<module>clock-dubbo-api</module>
+		<module>clock-biz</module>
+		<module>clock-web</module>
 	</modules>
 
 	<!-- 设置一些常量,方便修改 -->
@@ -33,13 +33,6 @@
 		<bonecp.version>0.7.1.RELEASE</bonecp.version>
 		<guava.version>14.0.1</guava.version>
 		<slf4j.version>1.7.2</slf4j.version>
-
-
-
-		<spring-data-jpa.version>1.4.3.RELEASE</spring-data-jpa.version>
-		<joda.time.version>2.2</joda.time.version>
-		<shiro.version>1.2.3</shiro.version>
-		<cxf.version>3.0.1</cxf.version>
 	</properties>
 
 	<!-- 添加私有仓库 -->
@@ -179,13 +172,11 @@
 				<groupId>com.alibaba</groupId>
 				<artifactId>dubbo</artifactId>
 				<version>${dubbo.version}</version>
-				<!-- 过滤掉这些依赖,防止跟springmvc冲突 -->
-				<exclusions>
-					<exclusion>
-						<groupId>javax.servlet</groupId>
-						<artifactId>javax.servlet-api</artifactId>
-					</exclusion>
-				</exclusions>
+			</dependency>
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>dubbo-rpc-rest</artifactId>
+				<version>${dubbo.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>com.101tec</groupId>
