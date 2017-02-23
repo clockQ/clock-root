@@ -1,26 +1,25 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<script src="../module/jquery/jquery-1.11.1.min.js"></script>
-<title>登录</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!--引入css-->
+  <title>登录</title>
 </head>
+<!--预加载JQ库-->
 <body>
 	<input type="submit" class="login_submit" value="登 录" id="login_btn" />
-	<script type="text/javascript">
-		// $("#login_btn").click(function(){
-		// 	$.ajax({
-  //           	type : "GET",
-  //           	url : 'http://localhost:60101/clock/company/login',
-  //               dataType : "json",//设置需要返回的数据类型
-  //               success : function(d) {
-  //               	alert(d);
-  //               },
-  //               error : function(d) {
-  //               	alert(d.responseText);
-  //               }
-  //           });//END ajax
-		// });//END $("#login_btn").click
-	</script>
 </body>
 </html>
+
+<!--不需要预加载的js库,提高页面打开速度-->
+<script type="text/javascript" src="../static/js/module/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../static/js/page/company.js"></script>
+<!--当前页面的js片段-->
+<script type="text/javascript">
+  $(document).on('click','#login_btn',function(){
+    login_company();
+  });
+</script>
+
+
+
