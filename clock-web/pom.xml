@@ -11,7 +11,6 @@
   <packaging>pom</packaging>
   <build/>
   <modules>
-  	<module>clock-page</module>
     <module>clcok-controller</module>
   </modules>
 </project>

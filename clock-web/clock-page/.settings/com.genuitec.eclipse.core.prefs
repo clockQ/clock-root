@@ -1,4 +1,0 @@
-eclipse.preferences.version=1
-validator.Checked=src/main/webapp/clock/common_js,src/main/webapp/clock/bs/js,src/main/webapp/clock/module
-validator.Revalidate=true
-validator.Unchecked=
