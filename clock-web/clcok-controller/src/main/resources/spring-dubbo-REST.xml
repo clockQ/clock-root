@@ -18,10 +18,10 @@
 	<dubbo:reference id="bsCompanySV" interface="org.clock.bs.api.IBsCompanySV"
 		url="dubbo://127.0.0.1:26060/org.clock.bs.api.IBsCompanySV" version="1.0" />
 
-	<!-- 在20880端口暴露rest协议 -->
+	<!-- 在27070端口暴露rest协议 -->
 	<!--<dubbo:protocol name="rest" port="27070" server="tomcat"/> -->
 	<!-- 部署到内嵌tomcat -->
-	<dubbo:protocol name="rest" port="60101" server="tomcat"
+	<dubbo:protocol name="rest" port="27070" server="tomcat"
 		contextpath="/clock" />
 
 	<!-- 发布这个服务 -->

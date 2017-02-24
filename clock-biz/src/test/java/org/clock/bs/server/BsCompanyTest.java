@@ -1,9 +1,6 @@
 package org.clock.bs.server;
 
-import java.math.BigDecimal;
-
 import org.clock.bs.api.IBsCompanySV;
-import org.clock.bs.entity.BsCompany;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,12 +27,12 @@ public class BsCompanyTest {
 
 	@Test//TODO 待测
 	public void testRegisteredCompany() {
-		BsCompany entity = new BsCompany();
-		entity.setCompanyId((long) 003);
-		entity.setCompanyName("testname3");
-		entity.setEmail("testmail3");
-		entity.setPassword("testspring3");
-		entity.setPhone(new BigDecimal("123333333"));
+//		BsCompany entity = new BsCompany();
+//		entity.setCompanyId((long) 003);
+//		entity.setCompanyName("testname3");
+//		entity.setEmail("testmail3");
+//		entity.setPassword("testspring3");
+//		entity.setPhone(new BigDecimal("123333333"));
 //		bsCompanySV.registeredCompany(entity);
 	}
 	
@@ -44,7 +41,6 @@ public class BsCompanyTest {
 		try {
 			System.out.println(bsCompanySV.getCompanyById(1));
 		} catch (Exception e) {
-			e.printStackTrace();
 			e.printStackTrace();
 		}
 	}

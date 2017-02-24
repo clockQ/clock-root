@@ -10,7 +10,7 @@
 	</parent>
 	<artifactId>clock-pojo</artifactId>
 	<name>${project.artifactId}</name>
-	
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -18,11 +18,12 @@
 
 	<!-- 从父工程添加依赖jar -->
 	<dependencies>
-		<!-- oracle驱动 -->
+		<!-- MySql驱动 -->
 		<dependency>
-		    <groupId>com.oracle</groupId>   
-	   		<artifactId>ojdbc6</artifactId>   
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
 		</dependency>
+
 		<!-- hibernate4 -->
 		<dependency>
 			<groupId>org.hibernate</groupId>

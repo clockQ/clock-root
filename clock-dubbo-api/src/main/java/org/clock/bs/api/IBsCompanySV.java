@@ -24,5 +24,5 @@ public interface IBsCompanySV {
 	 * @param id	公司id
 	 * @return	返回公司实体类
 	 */
-	public BsCompany getCompanyById(long id) throws Exception;
+	public BsCompany getCompanyById(int id) throws Exception;
 }

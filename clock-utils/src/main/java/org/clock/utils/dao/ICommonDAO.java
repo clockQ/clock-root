@@ -32,7 +32,7 @@ public interface ICommonDAO {
 	 * @param id	要查询的实体类id
 	 * @return
 	 */
-	public <T> T findById(Class<T> classType, long id) throws Exception;
+	public <T> T findById(Class<T> classType, int id) throws Exception;
 
 	//	/**
 	//	 * 保存或更新实体

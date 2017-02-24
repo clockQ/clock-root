@@ -17,58 +17,83 @@
         http://www.springframework.org/schema/util
         http://www.springframework.org/schema/util/spring-util.xsd
         ">
-	<!-- ******* 导入全局配置文件 ***** -->
+	<!-- ******* 导入外部数据库的properties文件 ***** -->
 	<context:property-placeholder location="classpath:dev.common.properties" />
-
-	<!-- 配置数据源 -->
+	
+	<!-- 数据源 -->
 	<bean id="dataSource" class="com.jolbox.bonecp.BoneCPDataSource"
 		destroy-method="close">
-		<!-- ******* 数据库配置信息 ****** -->
-		<property name="jdbcUrl" value="${jdbc.url}"></property>
-		<property name="driverClass" value="${jdbc.dirver}"></property>
-		<property name="username" value="${jdbc.username}"></property>
-		<property name="password" value="${jdbc.password}"></property>
-		<!-- 其他配置 -->
-		<property name="idleMaxAgeInMinutes" value="240" />
-		<property name="idleConnectionTestPeriodInMinutes" value="60" />
-		<property name="partitionCount" value="3" />
-		<property name="acquireIncrement" value="10" />
-		<property name="maxConnectionsPerPartition" value="6" />
-		<property name="minConnectionsPerPartition" value="3" />
-		<property name="statementsCacheSize" value="50" />
-		<property name="releaseHelperThreads" value="3" />
+		<!-- 数据库驱动 -->
+		<property name="driverClass" value="${jdbc.driverClassName}" />
+		<!-- 相应驱动的jdbcUrl -->
+		<property name="jdbcUrl" value="${jdbc.url}" />
+		<!-- 数据库的用户名 -->
+		<property name="username" value="${jdbc.username}" />
+		<!-- 数据库的密码 -->
+		<property name="password" value="${jdbc.password}" />
+		<!-- 检查数据库连接池中空闲连接的间隔时间，单位是分，默认值：240，如果要取消则设置为0 -->
+		<property name="idleConnectionTestPeriod" value="${BoneCP.idleConnectionTestPeriod}" />
+		<!-- 连接池中未使用的链接最大存活时间，单位是分，默认值：60，如果要永远存活设置为0 -->
+		<property name="idleMaxAge" value="${BoneCP.idleMaxAge}" />
+		<!-- 每个分区最大的连接数 -->
+		<property name="maxConnectionsPerPartition" value="${BoneCP.maxConnectionsPerPartition}" />
+		<!-- 每个分区最小的连接数 -->
+		<property name="minConnectionsPerPartition" value="${BoneCP.minConnectionsPerPartition}" />
+		<!-- 分区数 ，默认值2，最小1，推荐3-4，视应用而定 -->
+		<property name="partitionCount" value="${BoneCP.partitionCount}" />
+		<!-- 每次去拿数据库连接的时候一次性要拿几个,默认值：2 -->
+		<property name="acquireIncrement" value="${BoneCP.acquireIncrement}" />
+		<!-- 缓存prepared statements的大小，默认值：0 -->
+		<property name="statementsCacheSize" value="${BoneCP.statementsCacheSize}" />
+		<!-- 每个分区释放链接助理进程的数量，默认值：3，除非你的一个数据库连接的时间内做了很多工作，不然过多的助理进程会影响你的性能 -->
+		<property name="releaseHelperThreads" value="${BoneCP.releaseHelperThreads}" />
+	</bean>
+	
+	<!-- 用于指定持久化实现厂商类 -->
+	<bean id="persistenceProvider" class="org.hibernate.ejb.HibernatePersistence" />
+	
+	<!-- 用于设置JPA实现厂商的特定属性 -->
+	<bean id="jpaVendorAdapter"
+		class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+		<property name="database" value="${db.name}" />
 	</bean>
 
-	<!--配置实体管理对象 -->
-	<bean id="entityManager"
+	<!-- 用于指定一些高级特性 -->
+	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+	
+	<!-- JPA实体管理器工厂 -->
+	<bean id="entityManagerFactory"
 		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-		<property name="dataSource" ref="dataSource"></property>
-		<!-- 定义entity实体扫描路径 -->
+		<property name="dataSource" ref="dataSource" />
+		<property name="persistenceProvider" ref="persistenceProvider" />
+		<property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
+		<property name="jpaDialect" ref="jpaDialect" />
+		<!-- 实体类扫描范围 -->
 		<property name="packagesToScan" value="org.clock.bs.entity" />
-		<!-- jpaVendorAdapter 用于设置实现厂商JPA实现的特定属性,如设置Hibernate的是否自动生成DDL的属性generateDdl；这些属性是厂商特定的，因此最好在这里设置 -->
-		<property name="jpaVendorAdapter">
-			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-				<property name="showSql" value="${hibernate.showSql}"/>
-				<property name="generateDdl" value="${hibernate.generateDdl}"/>
-				<property name="databasePlatform" value="${hibernate.databasePlatform}"/>
-			</bean>
-		</property>
-		<!--指定JPA属性 如: Hibernate中指定是否显示SQL的 -->
+
 		<property name="jpaProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
-				<prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory
+				<prop key="hibernate.dialect">
+					org.hibernate.dialect.MySQL5Dialect
 				</prop>
-				<prop key="hibernate.jdbc.use_streams_for_binary">true</prop>
-				<prop key="javax.persistence.sharedCache.mode">ENABLE_SELECTIVE</prop>
-				<prop key="hibernate.cache.use_query_cache">true</prop>
-				<!-- 启用二级缓存,先关闭 -->
-				<!-- <prop key="hibernate.cache.use_second_level_cache">true</prop> -->
-				<!-- <prop key="net.sf.ehcache.configurationResourceName">hb-ehcache.xml</prop> -->
-				<prop key="hibernate.generate_statistics">true</prop>
-				<prop key="hibernate.use_sql_comments">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
+				<prop key="hibernate.connection.driver_class">
+					com.mysql.jdbc.Driver
+				</prop>
+				<prop key="hibernate.max_fetch_depth">3</prop>
+				<prop key="hibernate.jdbc.fetch_size">18</prop>
+				<prop key="hibernate.jdbc.batch_size">10</prop>
+				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+				<prop key="hibernate.show_sql">${hibernate.showSql}</prop>
+				<prop key="hibernate.format_sql">${hibernate.formatSql}</prop>
 			</props>
 		</property>
 	</bean>
+
+	<!-- 事务管理器 -->
+	<bean id="txManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory" />
+	</bean>
+
+	<!-- 注解式事务 -->
+	<tx:annotation-driven transaction-manager="txManager" />
 </beans>

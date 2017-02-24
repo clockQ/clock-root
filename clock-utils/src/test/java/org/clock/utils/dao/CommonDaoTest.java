@@ -1,7 +1,5 @@
 package org.clock.utils.dao;
 
-import java.math.BigDecimal;
-
 import org.clock.bs.entity.BsCompany;
 import org.junit.After;
 import org.junit.Before;
@@ -31,21 +29,21 @@ public class CommonDaoTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void testAdd() {
-		//TODO 待测
-		BsCompany entity = new BsCompany();
-		entity.setCompanyId((long) 003);
-		entity.setCompanyName("testname3");
-		entity.setEmail("testmail3");
-		entity.setPassword("testspring3");
-		entity.setPhone(new BigDecimal(1233333));
-		try {
-			commonDao.add(entity);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	@Test
+//	public void testAdd() {
+//		//TODO 待测
+//		BsCompany entity = new BsCompany();
+//		entity.setCompanyId((long) 003);
+//		entity.setCompanyName("testname3");
+//		entity.setEmail("testmail3");
+//		entity.setPassword("testspring3");
+//		entity.setPhone(new BigDecimal(1233333));
+//		try {
+//			commonDao.add(entity);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Test//通过
 	public void testFindById() {

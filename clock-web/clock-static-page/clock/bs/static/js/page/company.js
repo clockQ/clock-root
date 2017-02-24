@@ -1,11 +1,11 @@
 //本地接口别名
-var {company} = 'RESTApi/company';
+var RESTApiURL = "/RESTApi/company";
 
 
 function login_company(){
 	$.ajax({
-		type : "POST",
-		url : '/RESTApi/company/login',
+		type : "GET",
+		url : RESTApiURL + "/login",
 		dataType : "json",//设置需要返回的数据类型
 		success : function(d) {
 			alert(d);

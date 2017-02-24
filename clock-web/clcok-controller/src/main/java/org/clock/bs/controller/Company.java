@@ -15,7 +15,7 @@ public class Company implements ICompany{
 		try {
 			BsCompany bsCompany = bsCompanySV.getCompanyById(1);
 			result = bsCompany.toString();
-			System.out.println(result);
+			System.out.println(bsCompany);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

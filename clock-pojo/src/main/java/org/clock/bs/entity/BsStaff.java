@@ -2,56 +2,59 @@ package org.clock.bs.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 /**
- * The persistent class for the BS_STAFF database table.
+ * The persistent class for the bs_staff database table.
  * 
  */
 @Entity
-@Table(name="BS_STAFF")
+@Table(name="bs_staff")
+@NamedQuery(name="BsStaff.findAll", query="SELECT b FROM BsStaff b")
 public class BsStaff implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="BS_STAFF_STAFFID_GENERATOR", sequenceName="BS_STAFF$SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BS_STAFF_STAFFID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="STAFF_ID")
-	private long staffId;
+	private int staffId;
 
 	@Column(name="COMPANY_ID")
-	private BigDecimal companyId;
+	private int companyId;
 
 	@Column(name="COMPANY_NAME")
 	private String companyName;
 
 	private String email;
 
-	private BigDecimal leave;
+	@Column(name="`LEAVE`")
+	private String leave;
+
+	private String name;
 
 	private String password;
 
-	private BigDecimal phone;
+	private String phone;
 
-	private String username;
+	@Column(name="USER_NUMBER")
+	private String userNumber;
 
-    public BsStaff() {
-    }
+	public BsStaff() {
+	}
 
-	public long getStaffId() {
+	public int getStaffId() {
 		return this.staffId;
 	}
 
-	public void setStaffId(long staffId) {
+	public void setStaffId(int staffId) {
 		this.staffId = staffId;
 	}
 
-	public BigDecimal getCompanyId() {
+	public int getCompanyId() {
 		return this.companyId;
 	}
 
-	public void setCompanyId(BigDecimal companyId) {
+	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
 
@@ -71,12 +74,20 @@ public class BsStaff implements Serializable {
 		this.email = email;
 	}
 
-	public BigDecimal getLeave() {
+	public String getLeave() {
 		return this.leave;
 	}
 
-	public void setLeave(BigDecimal leave) {
+	public void setLeave(String leave) {
 		this.leave = leave;
+	}
+
+	public String getName() {
+		return this.name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public String getPassword() {
@@ -87,28 +98,29 @@ public class BsStaff implements Serializable {
 		this.password = password;
 	}
 
-	public BigDecimal getPhone() {
+	public String getPhone() {
 		return this.phone;
 	}
 
-	public void setPhone(BigDecimal phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 
-	public String getUsername() {
-		return this.username;
+	public String getUserNumber() {
+		return this.userNumber;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUserNumber(String userNumber) {
+		this.userNumber = userNumber;
 	}
 
 	@Override
 	public String toString() {
 		return "BsStaff [staffId=" + staffId + ", companyId=" + companyId
 				+ ", companyName=" + companyName + ", email=" + email
-				+ ", leave=" + leave + ", password=" + password + ", phone="
-				+ phone + ", username=" + username + "]";
+				+ ", leave=" + leave + ", name=" + name + ", password="
+				+ password + ", phone=" + phone + ", userNumber=" + userNumber
+				+ "]";
 	}
 
 }

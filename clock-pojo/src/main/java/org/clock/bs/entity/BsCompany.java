@@ -2,23 +2,22 @@ package org.clock.bs.entity;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.math.BigDecimal;
 
 
 /**
- * The persistent class for the BS_COMPANY database table.
+ * The persistent class for the bs_company database table.
  * 
  */
 @Entity
-@Table(name="BS_COMPANY")
+@Table(name="bs_company")
+@NamedQuery(name="BsCompany.findAll", query="SELECT b FROM BsCompany b")
 public class BsCompany implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="BS_COMPANY_COMPANYID_GENERATOR", sequenceName="BS_STAFF$SEQ")
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="BS_COMPANY_COMPANYID_GENERATOR")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="COMPANY_ID")
-	private long companyId;
+	private int companyId;
 
 	@Column(name="COMPANY_NAME")
 	private String companyName;
@@ -27,16 +26,16 @@ public class BsCompany implements Serializable {
 
 	private String password;
 
-	private BigDecimal phone;
+	private String phone;
 
-    public BsCompany() {
-    }
+	public BsCompany() {
+	}
 
-	public long getCompanyId() {
+	public int getCompanyId() {
 		return this.companyId;
 	}
 
-	public void setCompanyId(long companyId) {
+	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
 
@@ -64,11 +63,11 @@ public class BsCompany implements Serializable {
 		this.password = password;
 	}
 
-	public BigDecimal getPhone() {
+	public String getPhone() {
 		return this.phone;
 	}
 
-	public void setPhone(BigDecimal phone) {
+	public void setPhone(String phone) {
 		this.phone = phone;
 	}
 

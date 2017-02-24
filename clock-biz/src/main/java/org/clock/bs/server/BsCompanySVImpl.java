@@ -24,7 +24,7 @@ public class BsCompanySVImpl implements	IBsCompanySV {
 	}
 
 	@Override
-	public BsCompany getCompanyById(long id) throws Exception {
+	public BsCompany getCompanyById(int id) throws Exception {
 		BsCompany bsCompanyResult = null;
 		bsCompanyResult = commonDao.findById(BsCompany.class,id);
 		return bsCompanyResult;

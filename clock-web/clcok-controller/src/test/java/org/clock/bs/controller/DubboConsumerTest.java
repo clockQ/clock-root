@@ -10,7 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
-@ContextConfiguration(locations={"file:src/main/resources/spring-dubbo-consumer.xml"})  
+@ContextConfiguration(locations={"file:src/test/resources/spring-dubbo-consumer.xml"})  
 public class DubboConsumerTest {
 	@Autowired
 	private IBsCompanySV bsCompanySV;
@@ -27,7 +27,6 @@ public class DubboConsumerTest {
 	public void testDubboConsumer(){
 		try {
 			System.out.println(bsCompanySV.getCompanyById(1));
-			System.in.read();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
