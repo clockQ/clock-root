@@ -1,192 +1,167 @@
 package org.clock.utils.dao;
 
-//import java.io.Serializable;
-//import java.util.List;
-//import java.util.Map;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
 
-//import javax.persistence.criteria.CriteriaBuilder;
-//import javax.persistence.criteria.CriteriaQuery;
-//
-//import org.apache.poi.ss.formula.functions.T;
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.data.jpa.domain.Specification;
+import javax.transaction.Transactional;
 
 /**
  * @author clcok
  */
+@Transactional
 public interface ICommonDAO {
 
 	/**
 	 * 添加对象
 	 * 
-	 * @param entity
+	 * @param entity	新增实体对象
 	 * @throws Exception
 	 */
 	public void add(Object entity) throws Exception;
 
 	/**
-	 * 通过主键查询
+	 * 在事物中删除对象,使用em.remove(em.merge(entity))
 	 * 
-	 * @param classType	保存的实体类.class
-	 * @param id	要查询的实体类id
-	 * @return
+	 * @param entity	要删除的实体对象,有主键即可
+	 * @throws Exception
 	 */
-	public <T> T findById(Class<T> classType, int id) throws Exception;
+	public void remove(Object entity) throws Exception;
 
-	//	/**
-	//	 * 保存或更新实体
-	//	 * 
-	//	 * @param entity	实体类引用
-	//	 * @param entityClass	实体类.class
-	//	 * @return	返回值为被保存后的对象(出现id字段)
-	//	 * @throws Exception
-	//	 */
-	//	public <T> T saveOrUpdate(T entity, Class<T> entityClass) throws Exception;
-	//
-	//	/**
-	//	 * 删除对象
-	//	 * 
-	//	 * @param entity
-	//	 * @throws Exception
-	//	 */
-	//	public int remove(Object entity) throws Exception;
-	//	
-	//	/**
-	//	 * 根据id删除实体
-	//	 * 
-	//	 * @param id
-	//	 * @param entityClass
-	//	 */
-	//	public <T, ID extends Serializable> void delete(ID id, Class<T> entityClass);
-	//
-	//	/**
-	//	 * 通过实体类查询全部
-	//	 * 
-	//	 * @param entityClass	实体类.class
-	//	 * @return	查询出的全部行信息
-	//	 */
-	//	public <T> List<T> findAll(Class<T> entityClass);
+	/**
+	 * 根据id删除对象
+	 * 
+	 * @param id	要删除的数据id
+	 * @param entity	要删除的实体对象.class
+	 * @throws Exception
+	 */
+	public <T, ID extends Serializable> void remove(Class<T> entityClass,ID id) throws Exception;
 
-	//	/**
-	//	 * 通过查询语句进行查询
-	//	 * 
-	//	 * @param jpaql		jpa查询语句
-	//	 * @param param		Map<String,Object>属性
-	//	 * @return	查询返回的行信息
-	//	 * @throws Exception
-	//	 */
-	//	@SuppressWarnings("rawtypes")
-	//	public List findByJPAQL(String jpaql, Map param) throws Exception;
-	//
-	//	/**
-	//	 * 通过查询语句进行查询
-	//	 * 
-	//	 * @param jpaql		jpa查询语句
-	//	 * @param param		Map<String,Object>属性
-	//	 * @param needCache 是否需要用缓存
-	//	 * @return	查询返回的行信息
-	//	 * @throws Exception
-	//	 */
-	//	@SuppressWarnings("rawtypes")
-	//	public List findByJPAQL(String jpaql, Map param, boolean needCache)
-	//			throws Exception;
-	//
-	//	/**
-	//	 * 分页查询
-	//	 * 
-	//	 * @param jpaql	jpa查询语句
-	//	 * @param param	Map<String,Object>属性
-	//	 * @param start	开始页,从1开始
-	//	 * @param pageSize	每页大小
-	//	 * @return	结果页
-	//	 */
-	//	@SuppressWarnings("rawtypes")
-	//	public List findByJPAQL(String jpaql, Map param, int start, int pageSize);
-	//
-	//	/**
-	//	 * 分页查询,可以从缓存中获取
-	//	 * 
-	//	 * @param jpaql	jpa查询语句
-	//	 * @param param	Map<String,Object>属性
-	//	 * @param start	开始页,从1开始
-	//	 * @param pageSize	每页大小
-	//	 * @param needCache	是否需要从缓存取值
-	//	 * @return
-	//	 */
-	//	@SuppressWarnings("rawtypes")
-	//	public List findByJPAQL(String jpaql, Map param, int start, int pageSize,
-	//			boolean needCache);
-	//
-	//	
-	//	
-	//	
-	//
-	//	
-	//	/**
-	//	 * 根据id查询一个实体
-	//	 * @param id
-	//	 * @param entityClass
-	//	 * @return
-	//	 */
-	//	public <T, ID extends Serializable> T findOne(ID id, Class<T> entityClass);
-	//
-	//	/**
-	//	 * 批量保存
-	//	 * @param entitys
-	//	 * @param entityClass
-	//	 * @return
-	//	 * @throws Exception 
-	//	 */
-	//	public <T> List<T> saveOrUpdates(List<T> entitys,Class<T> entityClass) throws Exception;
-	//
-	//	/**
-	//	 * 通过cq对象进行查询
-	//	 * @param cq
-	//	 * @return
-	//	 */
-	//	public <T> List<T> findAllByCriteria(CriteriaQuery<T> cq);
-	//
-	//	/**
-	//	 * 获取CriteriaBuilder
-	//	 * @return
-	//	 */
-	//	public CriteriaBuilder getCriteriaBuilder();
-	//
-	//	/**
-	//	 * 通过sql语句查询
-	//	 * @param sql
-	//	 * @param param
-	//	 * @return
-	//	 * @throws Exception
-	//	 */
-	//	public List findBySql(String sql,Map param)throws Exception;
-	//
-	//	/**
-	//	 * 通过sql语句查询
-	//	 * @param sql
-	//	 * @param param
-	//	 * @param entity
-	//	 * @return
-	//	 * @throws Exception
-	//	 */
-	//	public <T> List<T> findBySql(String sql,Map param,Class<T> entity)throws Exception;
-	//
-	//	/**
-	//	 * 通过sql语句查询
-	//	 * @param sql
-	//	 * @param param
-	//	 * @param resultMappingName
-	//	 * @return
-	//	 * @throws Exception
-	//	 */
-	//	public List findBySql(String sql,Map param,String resultMappingName)throws Exception;
-	//
-	//	/**
-	//	 * 多线程操作数据库时,可能造成session关闭而引用还没销毁,造成无法delete,使用这个方法则会重新打开要删除的数据库连接,确保删除
-	//	 * @param entity
-	//	 * @throws Exception
-	//	 */
-	//	public void deleteNewThread(Object entity) throws Exception;
+	/**
+	 * 添加或更新实体,如果已经存在就更新,没有就保存,相当于(addOrUpdate)
+	 * 
+	 * @param entity	实体类引用
+	 * @return	返回值为被保存后的对象(如果没有id会自动加入id值)
+	 * @throws Exception
+	 */
+	public <T> T save(T entity) throws Exception;
 
+	/**
+	 * 返回数据表中的行数
+	 * 
+	 * @param entityClass	要查询的实体类.class
+	 * @return
+	 * @throws Exception
+	 */
+	public <T>long getCount(Class<T> entityClass) throws Exception;
+
+	/**
+	 * 按照输入模糊查询指定字段,并排序,去重<br>
+	 * 可用于text标签输入时提示用户信息
+	 * 
+	 * @param entityClass	要查询的实体类
+	 * @param colName	要查询的列
+	 * @param param	要匹配的串儿
+	 * @return	符合条件的列的list
+	 * @throws Exception
+	 */
+	public <T> List<Object> findByParam(Class<T> entityClass,String colName,String param) throws Exception;
+
+	/**
+	 * 通过主键查询出一行数据
+	 * 
+	 * @param entityClass	查询的实体类.class
+	 * @param id	要查询的实体类id
+	 * @return	返回查询结果
+	 * @throws Exception
+	 */
+	public <T> T findById(Class<T> entityClass,Object id) throws Exception;
+
+	/**
+	 * 通过实体类型查询出全部数据
+	 * 
+	 * @param entityClass	查询的实体类.class
+	 * @return	返回查询结果列表
+	 * @throws Exception
+	 */
+	public <T> List<T> findAll(Class<T> entityClass) throws Exception;
+
+	/**
+	 * 通过实体类型查询出全部数据并可以缓存
+	 * 
+	 * @param entityClass	查询的实体类.class
+	 * @param needCache	是否需要缓存 true => 缓存
+	 * @return	返回查询结果列表
+	 * @throws Exception
+	 */
+	public <T> List<T> findAll(Class<T> entityClass, boolean needCache) throws Exception;
+
+	/**
+	 * 通过实体类型查询出全部数据,分页返回并可以缓存
+	 * 
+	 * @param entityClass	查询的实体类.class
+	 * @param start	开始页,从1开始
+	 * @param pageSize	每页大小
+	 * @param needCache	是否需要缓存 true => 缓存
+	 * @return	结果list
+	 */
+	public <T> List<T> findAll(Class<T> entityClass, int start, int pageSize,boolean needCache) throws Exception ;
+
+
+	/**
+	 * 通过JPAQL查询语句进行查询
+	 * 
+	 * @param jpaql		jpa查询语句
+	 * @param param		Map<String,Object>属性
+	 * @return	查询返回的list信息
+	 * @throws Exception
+	 */
+	public <T> List<T> findByJPAQL(String jpaql, Map<String,Object> param) throws Exception;
+
+	/**
+	 * 通过JPAQL查询语句进行查询并缓存
+	 * 
+	 * @param jpaql		jpa查询语句
+	 * @param param		Map<String,Object>属性
+	 * @param needCache	是否需要缓存 true => 缓存
+	 * @return	查询返回的list信息
+	 * @throws Exception
+	 */
+	public <T> List<T> findByJPAQL(String jpaql, Map<String,Object> param, boolean needCache)
+			throws Exception;
+
+	/**
+	 * 通过SQL语句查询
+	 * 
+	 * @param sql	sql查询语句
+	 * @param param	Map<String,Object>属性
+	 * @param entity	要查询的实体类
+	 * @return
+	 * @throws Exception
+	 */
+	public <T> List<T> findBySQL(String sql,Map<String,Object> param,Class<T> entity)throws Exception;
+
+	/**
+	 * 分页查询
+	 * 
+	 * @param jpaql	jpa查询语句
+	 * @param param	Map<String,Object>属性
+	 * @param start	开始页,从1开始
+	 * @param pageSize	每页大小
+	 * @return	结果list
+	 */
+	public <T> List<T> findByJPAQL(String jpaql, Map<String,Object> param, int start, int pageSize) throws Exception ;
+
+	/**
+	 * 分页查询,可以从缓存中获取
+	 * 
+	 * @param jpaql	jpa查询语句
+	 * @param param	Map<String,Object>属性
+	 * @param start	开始页,从1开始
+	 * @param pageSize	每页大小
+	 * @param needCache	是否需要缓存 true => 缓存
+	 * @return	结果list
+	 */
+	public <T> List<T> findByJPAQL(String jpaql, Map<String,Object> param, int start, int pageSize,
+			boolean needCache) throws Exception ;
 }

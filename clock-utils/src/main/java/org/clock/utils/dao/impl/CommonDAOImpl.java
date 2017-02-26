@@ -1,26 +1,21 @@
 package org.clock.utils.dao.impl;
 
+import java.io.Serializable;
+import java.util.List;
+import java.util.Map;
+
 import org.clock.utils.dao.ICommonDAO;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
+import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
+import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 import org.springframework.stereotype.Repository;
-
-//import java.io.Serializable;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Map;
-//import javax.persistence.Query;
-//import javax.persistence.criteria.CriteriaBuilder;
-//import javax.persistence.criteria.CriteriaQuery;
-//
-//import org.springframework.data.domain.Page;
-//import org.springframework.data.domain.Pageable;
-//import org.springframework.data.jpa.domain.Specification;
-//import org.springframework.data.jpa.repository.support.JpaEntityInformation;
-//import org.springframework.data.jpa.repository.support.JpaEntityInformationSupport;
-//import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
 
 /**
  * @author clock
@@ -37,186 +32,177 @@ public class CommonDAOImpl implements ICommonDAO{
 	}
 
 	@Override
-	public <T>T findById(Class<T> classType, int id) throws Exception {
-		return em.find(classType,id);
+	public void remove(Object entity) throws Exception {
+		em.remove(em.merge(entity));
 	}
 
+	@Override
+	public <T> T save(T entity) throws Exception {
+		return em.merge(entity);
+	}
 
-	//	
-	//	@Override
-	//	public void save(Object entity) throws Exception {
-	//		
-	//	}
-	//
-	//	@Override
-	//	public void delete(Object entity) throws Exception {
-	//		em.remove(entity);
-	//	}
-	//
-	//	
-	//
-	//	@Override
-	//	public List findByJPAQL(String jpaql,Map param) throws Exception {
-	//		Query query = em.createQuery(jpaql);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		return query.getResultList();
-	//	}
-	//
-	//	@Override
-	//	public List findByJPAQL(String jpaql, Map param, boolean needCache)
-	//			throws Exception {
-	//		Query query = em.createQuery(jpaql);
-	//		if(needCache==true)
-	//			query.setHint("org.hibernate.cacheable", true);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		return query.getResultList();
-	//	}
-	//
-	//	@Override
-	//	public <T> T saveOrUpdate(T entity,Class<T> entityClass) throws Exception {
-	//		JpaEntityInformation<T, ?> entityInfomation = JpaEntityInformationSupport.getMetadata(entityClass, em);
-	//		if(entityInfomation.isNew(entity)) {
-	//			em.persist(entity);
-	//			return entity;
-	//		} else {
-	//			T t = em.merge(entity);
-	//			return t;
-	//		}
-	//	}
-	//	
-	//	@Override
-	//	public List findByJPAQL(String jpaql,Map param,int start,int pageSize) {
-	//		Query query = em.createQuery(jpaql);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		query.setFirstResult((start-1)*pageSize);
-	//		query.setMaxResults(pageSize);
-	//		return query.getResultList();
-	//	}
-	//	
-	//	@Override
-	//	public List findByJPAQL(String jpaql, Map param, int start, int pageSize,
-	//			boolean needCache) {
-	//		Query query = em.createQuery(jpaql);
-	//		if(needCache==true)
-	//			query.setHint("org.hibernate.cacheable", true);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		query.setFirstResult((start-1)*pageSize);
-	//		query.setMaxResults(pageSize);
-	//		return query.getResultList();
-	//	}
-	//	
-	//	@Override
-	//	public <T, ID extends Serializable> void delete(ID id, Class<T> entityClass) {
-	//		this.getRepository(entityClass).delete(id);
-	//		
-	//	}
-	//	
-	//	@Override
-	//	public <T, ID extends Serializable> T findOne(ID id, Class<T> entityClass) {
-	//		return this.getRepository(entityClass).findOne(id);
-	//	}
-	//	
-	//	@Override
-	//	public <T> List<T> findAll(Class<T> entityClass) {
-	//		return this.getRepository(entityClass).findAll();
-	//	}
-	//	
-	//	@Override
-	//	public <T> Page<T> getPage(Pageable request, Class<T> entityClass) {
-	//		return this.getRepository(entityClass).findAll(request);
-	//	}
-	//	
-	//	@Override
-	//	public <T> List<T> findAll(Specification<T> spec, Class<T> entityClass) {
-	//		return this.getRepository(entityClass).findAll(spec);
-	//	}
-	//	
-	//	@Override
-	//	public <T> Page<T> getPageByFilter(Pageable request, Specification<T> spec, Class<T> entityClass) {
-	//		return this.getRepository(entityClass).findAll(spec, request);
-	//	}
-	//	
-	//	private <T, ID extends Serializable> SimpleJpaRepository<T, ID> getRepository(Class<T> entityClass) {
-	//		SimpleJpaRepository<T, ID> repository = new SimpleJpaRepository<T, ID>(JpaEntityInformationSupport.getMetadata(entityClass, em), em);
-	//		return repository;
-	//	}
-	//
-	//	@Override
-	//	public <T> List<T> saveOrUpdates(List<T> entitys, Class<T> entityClass) throws Exception{
-	//		List<T> rtnList = new ArrayList<T>();
-	//		for(T entity : entitys){
-	//			T saveEntity = this.saveOrUpdate(entity, entityClass);
-	//			rtnList.add(saveEntity);
-	//		}
-	//		return rtnList;
-	//	}
-	//	
-	//	@Override
-	//	public <T> List<T> findAllByCriteria(CriteriaQuery<T> cq){
-	//		return em.createQuery(cq).getResultList();
-	//	}
-	//
-	//	@Override
-	//	public CriteriaBuilder getCriteriaBuilder() {
-	//		return this.em.getCriteriaBuilder();
-	//	}
-	//
-	//	@Override
-	//	public List findBySql(String sql,Map param) throws Exception {
-	//		Query query = em.createNativeQuery(sql);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		return query.getResultList();
-	//	}
-	//
-	//	@Override
-	//	public <T> List<T> findBySql(String sql, Map param, Class<T> entity) throws Exception {
-	//		Query query = em.createNativeQuery(sql,entity);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		List<T> result = query.getResultList();
-	//		return result;
-	//	}
-	//
-	//	@Override
-	//	public List findBySql(String sql, Map param, String resultMappingName) throws Exception {
-	//		Query query = em.createNativeQuery(sql,resultMappingName);
-	//		if(param!=null){
-	//			for(Object key : param.keySet()){
-	//				query.setParameter(key.toString(), param.get(key.toString()));
-	//			}
-	//		}
-	//		List result = query.getResultList();
-	//		return result;
-	//	}
-	//
-	//	@Override
-	//	public void deleteNewThread(Object entity) throws Exception {
-	//		em.remove(em.merge(entity));
-	//	}
-	//
-	//	
+	/**
+	 * 传入实体类.class返回实体类名字
+	 * 
+	 * @param entityClass	要获取名字的class
+	 * @return	实体类名字的字符串形式
+	 */
+	protected  <T> String getEntityName(Class<T> entityClass){
+		String entityName = entityClass.getSimpleName();
+		Entity entity = entityClass.getAnnotation(Entity.class);
+		if(entity.name() != null && !entity.name().equals("")){
+			entityName = entity.name();
+		}
+		return entityName;
+	}
 
+	@Override
+	public <T>long getCount(Class<T> entityClass) throws Exception{
+		return (long)em.createQuery("SELECT COUNT(*) FROM "+ getEntityName(entityClass)).getSingleResult();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<Object> findByParam(Class<T> entityClass, String colName, String param) throws Exception {
+		String jpaql = "SELECT DISTINCT o." + colName + " FROM "+ getEntityName(entityClass) + " o WHERE o." + colName + " LIKE :code ORDER BY " + colName;
+		Query query = em.createQuery(jpaql);
+		query.setParameter("code","%" + param +"%");
+		return query.getResultList();
+	}
+
+	@Override
+	public <T>T findById(Class<T> entityClass,Object id) throws Exception {
+		return em.find(entityClass,id);
+	}
+
+	@Override
+	@SuppressWarnings("unchecked")
+	public <T> List<T> findAll(Class<T> entityClass) throws Exception {
+		String jpaql = "SELECT o FROM "+ getEntityName(entityClass) + " o";
+		Query query = em.createQuery(jpaql);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findAll(Class<T> entityClass, boolean needCache)
+			throws Exception {
+		String jpaql = "SELECT o FROM "+ getEntityName(entityClass) + " o";
+		Query query = em.createQuery(jpaql);
+		if(needCache==true)
+			query.setHint("org.hibernate.cacheable", true);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findAll(Class<T> entityClass, int start, int pageSize,
+			boolean needCache) {
+		String jpaql = "SELECT o FROM "+ getEntityName(entityClass) + " o";
+		Query query = em.createQuery(jpaql);
+		if(needCache==true)
+			query.setHint("org.hibernate.cacheable", true);
+		query.setFirstResult((start-1)*pageSize);
+		query.setMaxResults(pageSize);
+		return query.getResultList();
+	}
+
+	/**
+	 * 生成data-jpa数据操作工厂
+	 * 
+	 * @param entityClass	要生成jpa数据操作工厂的实体类.class
+	 * @return	数据操作工厂
+	 */
+	private <T, ID extends Serializable> SimpleJpaRepository<T, ID> getRepository(Class<T> entityClass) {
+		SimpleJpaRepository<T, ID> repository = new SimpleJpaRepository<T, ID>(JpaEntityInformationSupport.getMetadata(entityClass, em), em);
+		return repository;
+	}
+
+	@Override
+	public <T, ID extends Serializable> void remove(Class<T> entityClass,ID id) throws Exception {
+		this.getRepository(entityClass).delete(id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findByJPAQL(String jpaql,Map<String,Object> param) throws Exception {
+		Query query = em.createQuery(jpaql);
+		if(param!=null){
+			for(Object key : param.keySet()){
+				query.setParameter(key.toString(), param.get(key.toString()));
+			}
+		}
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findByJPAQL(String jpaql, Map<String,Object> param, boolean needCache)
+			throws Exception {
+		Query query = em.createQuery(jpaql);
+		if(needCache==true)
+			query.setHint("org.hibernate.cacheable", true);
+		if(param!=null){
+			for(Object key : param.keySet()){
+				query.setParameter(key.toString(), param.get(key.toString()));
+			}
+		}
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findBySQL(String sql, Map<String,Object> param, Class<T> entity) throws Exception {
+		Query query = em.createNativeQuery(sql,entity);
+		if(param!=null){
+			for(Object key : param.keySet()){
+				query.setParameter(key.toString(), param.get(key.toString()));
+			}
+		}
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findByJPAQL(String jpaql, Map<String, Object> param, int start, int pageSize) throws Exception {
+		Query query = em.createQuery(jpaql);
+		if(param!=null){
+			for(Object key : param.keySet()){
+				query.setParameter(key.toString(), param.get(key.toString()));
+			}
+		}
+		query.setFirstResult((start-1)*pageSize);
+		query.setMaxResults(pageSize);
+		return query.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public <T> List<T> findByJPAQL(String jpaql, Map<String, Object> param, int start, int pageSize, boolean needCache) throws Exception {
+		Query query = em.createQuery(jpaql);
+		if(needCache==true)
+			query.setHint("org.hibernate.cacheable", true);
+		if(param!=null){
+			for(Object key : param.keySet()){
+				query.setParameter(key.toString(), param.get(key.toString()));
+			}
+		}
+		query.setFirstResult((start-1)*pageSize);
+		query.setMaxResults(pageSize);
+		return query.getResultList();
+	}
+	
+	/**
+	 * 获得Criteria查询的实例,用于criteria 查询
+	 * 
+	 * @param entityClass 要操作的实体类.class
+	 * @return	CriteriaQuery实例
+	 */
+	@SuppressWarnings("unused")
+	private <T> CriteriaQuery<T> getCreateQuery(Class<T> entityClass){
+		//获得Criteria查询工厂
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		//获得Criteria查询的实例
+		return cb.createQuery(entityClass);
+	} 
 }
