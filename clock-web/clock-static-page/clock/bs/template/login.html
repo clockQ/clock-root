@@ -9,16 +9,33 @@
 <!--无-->
 <body>
 	<input type="submit" class="login_submit" value="登 录" id="login_btn" />
+	<input type="submit" class="register_submit" value="注册" id="register_btn" />
+	<input type="submit" class="register_submit" value="删除" id="remove_btn" />
+	<input type="submit" class="register_submit" value="名字" id="name_btn" />
+	<input type="submit" class="register_submit" value="id" id="id_btn" />
 </body>
 </html>
 
 <!--不需要预加载的js库,提高页面打开速度-->
 <script type="text/javascript" src="../static/js/module/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../static/js/module/Utils.js"></script>
 <script type="text/javascript" src="../static/js/page/company.js"></script>
 <!--当前页面的js片段-->
 <script type="text/javascript">
   $(document).on('click','#login_btn',function(){
     login_company();
+  });
+  $(document).on('click','#register_btn',function(){
+    register_company();
+  });
+  $(document).on('click','#remove_btn',function(){
+    remove_company();
+  });
+  $(document).on('click','#name_btn',function(){
+    name_company();
+  });
+  $(document).on('click','#id_btn',function(){
+    id_company();
   });
 </script>
 

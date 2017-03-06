@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE log4j:configuration PUBLIC "-//LOGGER" "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+
+    <!-- Appenders -->
+    <appender name="console" class="org.apache.log4j.ConsoleAppender">
+        <param name="Target" value="System.out" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p: %c - %m%n" />
+        </layout>
+    </appender>
+    
+    <!-- 文件保存,暂时不用 -->
+<!--    <appender name="file" class="org.apache.log4j.RollingFileAppender"> -->
+<!--         <param name="maxFileSize" value="40000KB" /> -->
+<!--         <param name="maxBackupIndex" value="5" /> -->
+<!-- 		 <param name="File" value="/sim/app/tools/tomcat.log" /> -->
+<!--         <param name="Append" value="true"/>  -->
+<!--         <layout class="org.apache.log4j.PatternLayout"> -->
+<!--             <param name="ConversionPattern" -->
+<!--                 value="[%d{yyyy-MM-dd HH:mm:ss,SSS} %-5p] [%t] %c %M - %m%n" /> -->
+<!--         </layout> -->
+<!--     </appender> -->
+
+    <!-- 3rdparty Loggers -->
+	<logger name="org.hibernate">
+		<level value="error"/>
+	</logger>
+	
+	<logger name="com.jolbox.bonecp">
+		<level value="error"/>
+	</logger>
+
+    <logger name="org.apache.shiro">
+        <level value="error"/>
+    </logger>
+    
+    <logger name="net.sf.ehcache">
+        <level value="error"/>
+    </logger>
+    
+    <logger name="org.activiti">
+        <level value="error" />
+    </logger>
+    
+    <logger name="org.springframework">
+        <level value="error" />
+    </logger>
+    
+    <logger name="org.apache.ibatis">
+        <level value="error" />
+    </logger>
+    
+    <logger name="com.alibaba.dubbo">
+        <level value="error" />
+    </logger>
+    
+    <logger name="org.quartz">
+        <level value="error" />
+    </logger>
+    
+    <logger name="org.clock.bs.server">
+        <level value="debug"/>
+    </logger>
+    
+    <!-- Root Logger -->
+    <root>
+    	<priority value ="debug"/>        
+        <appender-ref ref="console"/>        
+<!--         <appender-ref ref="file"/>  -->
+    </root>
+
+</log4j:configuration>

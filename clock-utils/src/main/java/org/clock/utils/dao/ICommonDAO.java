@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import javax.transaction.Transactional;
-
 /**
  * @author clcok
  */
-@Transactional
 public interface ICommonDAO {
 
 	/**
@@ -65,7 +62,7 @@ public interface ICommonDAO {
 	 * @return	符合条件的列的list
 	 * @throws Exception
 	 */
-	public <T> List<Object> findByParam(Class<T> entityClass,String colName,String param) throws Exception;
+	public <T> List<String> findByParam(Class<T> entityClass,String colName,String param) throws Exception;
 
 	/**
 	 * 通过主键查询出一行数据

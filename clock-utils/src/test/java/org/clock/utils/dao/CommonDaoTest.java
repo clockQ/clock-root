@@ -7,6 +7,7 @@ import java.util.Map;
 import org.clock.bs.entity.BsCompany;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -32,11 +33,11 @@ public class CommonDaoTest {
 	public void tearDown() throws Exception {
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindByParam(){
 		try {
-			List<Object> results = commonDao.findByParam(BsCompany.class,"email","test");
-			for(Object bs : results){
+			List<String> results = commonDao.findByParam(BsCompany.class,"email","test");
+			for(String bs : results){
 				System.out.println(bs.toString());
 			}
 		} catch (Exception e) {
@@ -44,7 +45,7 @@ public class CommonDaoTest {
 		}
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindBySQL(){
 		String sql = "select T.* from BS_COMPANY T where T.EMAIL = :email";
 		Map<String,Object> param = new HashMap<String,Object>();
@@ -59,7 +60,7 @@ public class CommonDaoTest {
 		}
 	}	
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindByJPAQL4(){
 		String jpaql = "select o from BsCompany o where o.email = :email";
 		Map<String,Object> param = new HashMap<String,Object>();
@@ -74,7 +75,7 @@ public class CommonDaoTest {
 		}
 	}	
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindByJPAQL3(){
 		String jpaql = "select o from BsCompany o where o.email = :email";
 		Map<String,Object> param = new HashMap<String,Object>();
@@ -90,7 +91,7 @@ public class CommonDaoTest {
 		}
 	}	
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindByJPAQL2(){
 		String jpaql = "select o from BsCompany o where o.email = :email";
 		Map<String,Object> param = new HashMap<String,Object>();
@@ -105,7 +106,7 @@ public class CommonDaoTest {
 		}
 	}	
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindByJPAQL(){
 		String jpaql = "select o from BsCompany o where o.companyId = :companyId";
 //		String jpaql = "select o from BsCompany o where o.email = :email";
@@ -122,7 +123,7 @@ public class CommonDaoTest {
 		}
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testFindAll(){
 		try {
 			List<BsCompany> findAll = commonDao.findAll(BsCompany.class);
@@ -134,7 +135,7 @@ public class CommonDaoTest {
 		}
 	}
 
-//	@Test//通过
+	@Test//通过
 	public void testFindById() {
 		try {
 			BsCompany bsCompany = commonDao.findById(BsCompany.class,1);
@@ -144,7 +145,7 @@ public class CommonDaoTest {
 		}
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testGetCount() throws Exception{
 		System.out.println(commonDao.getCount(BsCompany.class));
 	}

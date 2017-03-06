@@ -18,7 +18,7 @@ public class BsCompany implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="COMPANY_ID")
 	private int companyId;
-
+	
 	@Column(name="COMPANY_NAME")
 	private String companyName;
 

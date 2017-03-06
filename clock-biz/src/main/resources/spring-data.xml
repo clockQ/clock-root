@@ -95,5 +95,5 @@
 	</bean>
 
 	<!-- 注解式事务 -->
-	<tx:annotation-driven transaction-manager="txManager" />
+	<tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
 </beans>

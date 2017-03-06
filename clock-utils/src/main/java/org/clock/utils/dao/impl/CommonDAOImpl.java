@@ -63,8 +63,8 @@ public class CommonDAOImpl implements ICommonDAO{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T> List<Object> findByParam(Class<T> entityClass, String colName, String param) throws Exception {
-		String jpaql = "SELECT DISTINCT o." + colName + " FROM "+ getEntityName(entityClass) + " o WHERE o." + colName + " LIKE :code ORDER BY " + colName;
+	public <T> List<String> findByParam(Class<T> entityClass, String colName, String param) throws Exception {
+		String jpaql = "SELECT DISTINCT t." + colName + " FROM "+ getEntityName(entityClass) + " t WHERE t." + colName + " LIKE :code ORDER BY " + colName;
 		Query query = em.createQuery(jpaql);
 		query.setParameter("code","%" + param +"%");
 		return query.getResultList();
@@ -78,7 +78,7 @@ public class CommonDAOImpl implements ICommonDAO{
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> List<T> findAll(Class<T> entityClass) throws Exception {
-		String jpaql = "SELECT o FROM "+ getEntityName(entityClass) + " o";
+		String jpaql = "SELECT t FROM "+ getEntityName(entityClass) + " t";
 		Query query = em.createQuery(jpaql);
 		return query.getResultList();
 	}
@@ -87,7 +87,7 @@ public class CommonDAOImpl implements ICommonDAO{
 	@Override
 	public <T> List<T> findAll(Class<T> entityClass, boolean needCache)
 			throws Exception {
-		String jpaql = "SELECT o FROM "+ getEntityName(entityClass) + " o";
+		String jpaql = "SELECT t FROM "+ getEntityName(entityClass) + " t";
 		Query query = em.createQuery(jpaql);
 		if(needCache==true)
 			query.setHint("org.hibernate.cacheable", true);
@@ -98,7 +98,7 @@ public class CommonDAOImpl implements ICommonDAO{
 	@Override
 	public <T> List<T> findAll(Class<T> entityClass, int start, int pageSize,
 			boolean needCache) {
-		String jpaql = "SELECT o FROM "+ getEntityName(entityClass) + " o";
+		String jpaql = "SELECT t FROM "+ getEntityName(entityClass) + " t";
 		Query query = em.createQuery(jpaql);
 		if(needCache==true)
 			query.setHint("org.hibernate.cacheable", true);

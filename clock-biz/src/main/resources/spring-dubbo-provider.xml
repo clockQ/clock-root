@@ -10,6 +10,7 @@
 	
 	<!-- dubbo接口去除注册中心，采用直连的方式  -->
     <dubbo:registry address="N/A" /> 
+	<dubbo:provider timeout="1200000" />
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<!-- <dubbo:registry protocol="zookeeper" address="127.0.0.1:6060" /> -->
 	<!--dubbo集群开发 -->
