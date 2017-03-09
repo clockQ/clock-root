@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.PersistenceException;
+import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,7 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -32,10 +32,8 @@ public class CompanyControllerforREST {
 	 * @param entity 即将注册公司的实体引用
 	 * @return	成功返回带id的公司引用
 	 */
-	@RequestMapping(value="/register", method=RequestMethod.POST,
-	produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
-	public ResponsePOJO register(@RequestBody BsCompany entity){
+	@RequestMapping(value="/register", method=RequestMethod.POST,produces={"application/json;charset=UTF-8"})  
+	public ResponsePOJO register(@RequestBody @Valid BsCompany entity){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		if(entity.getCompanyId()!=0){
 			log.debug("系统出错,注册id不为空");
@@ -69,7 +67,7 @@ public class CompanyControllerforREST {
 		}
 		return responsePOJO;
 	}
-	
+
 	/**
 	 * 登录公司账号
 	 * 
@@ -77,9 +75,7 @@ public class CompanyControllerforREST {
 	 * @param password 公司邮箱密码
 	 * @return	登录成功返回公司信息
 	 */
-	@RequestMapping(value="/login", method=RequestMethod.POST,
-	produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
+	@RequestMapping(value="/login", method=RequestMethod.POST,produces={"application/json;charset=UTF-8"})  
 	public ResponsePOJO login(String email,String password) {
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		if(email==null||password==null||email.equals("")||password.equals("")){
@@ -118,7 +114,7 @@ public class CompanyControllerforREST {
 		}
 		return responsePOJO;
 	}
-	
+
 	/**
 	 * 修改公司信息
 	 * 
@@ -126,10 +122,8 @@ public class CompanyControllerforREST {
 	 * @param entity 公司实体
 	 * @return	成功返回true
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.PUT,
-	produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
-	public ResponsePOJO modifyCompanyInfo(@PathVariable Integer id,@RequestBody BsCompany entity){
+	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces={"application/json;charset=UTF-8"})  
+	public ResponsePOJO modifyCompanyInfo(@PathVariable Integer id,@RequestBody @Valid BsCompany entity){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		if(id == 0){
 			log.debug("修改公司的id为0");
@@ -158,16 +152,14 @@ public class CompanyControllerforREST {
 		}
 		return responsePOJO;
 	}
-	
+
 	/**
 	 * 删除公司账号
 	 * 
 	 * @param id 公司id
 	 * @return	成功返回true
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.DELETE,
-	produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE, produces={"application/json;charset=UTF-8"})  
 	public ResponsePOJO removeCompany(@PathVariable Integer id){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		try {
@@ -187,16 +179,14 @@ public class CompanyControllerforREST {
 		}
 		return responsePOJO;
 	}
-	
+
 	/**
 	 * 获得包含关键字的公司名称list
 	 * 
 	 * @param name	公司名称关键字
 	 * @return
 	 */
-	@RequestMapping(value="/getCompanyByName", method=RequestMethod.GET,
-	produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
+	@RequestMapping(value="/getCompanyByName", method=RequestMethod.GET, produces={"application/json;charset=UTF-8"})  
 	public List<String> getCompanyByName(String name){
 		List<String> result = new ArrayList<String>();
 		try {
@@ -208,16 +198,14 @@ public class CompanyControllerforREST {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 获得包含关键字的公司邮箱list
 	 * 
 	 * @param email	公司邮箱关键字
 	 * @return	公司邮箱集合
 	 */
-	@RequestMapping(value="/getCompanyByEmail", method=RequestMethod.GET,
-	produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
+	@RequestMapping(value="/getCompanyByEmail", method=RequestMethod.GET, produces={"application/json;charset=UTF-8"})  
 	public List<String> getCompanyByEmail(String email){
 		List<String> result = new ArrayList<String>();
 		try {
@@ -229,16 +217,14 @@ public class CompanyControllerforREST {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * 根据id获得公司信息
 	 * 
 	 * @param id 公司id
 	 * @return
 	 */
-	@RequestMapping(value="/{id}", method=RequestMethod.GET,
-			produces={"application/json;charset=UTF-8"})  
-	@ResponseBody
+	@RequestMapping(value="/{id}", method=RequestMethod.GET, produces={"application/json;charset=UTF-8"})  
 	public ResponsePOJO getCompanyById(@PathVariable Integer id){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		try {

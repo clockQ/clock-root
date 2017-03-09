@@ -62,6 +62,7 @@
 						<id>make-assembly</id>
 						<phase>package</phase>
 						<goals>
+							<!-- 命令行执行 mav assembly:assembly 即可打包 -->
 							<goal>assembly</goal>
 						</goals>
 					</execution>

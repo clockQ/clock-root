@@ -1,7 +1,10 @@
 package org.clock.bs.entity;
 
 import java.io.Serializable;
+
 import javax.persistence.*;
+
+import org.hibernate.validator.constraints.NotEmpty;
 
 
 /**
@@ -20,10 +23,13 @@ public class BsCompany implements Serializable {
 	private int companyId;
 	
 	@Column(name="COMPANY_NAME")
+	@NotEmpty
 	private String companyName;
 
+	@NotEmpty
 	private String email;
 
+	@NotEmpty
 	private String password;
 
 	private String phone;

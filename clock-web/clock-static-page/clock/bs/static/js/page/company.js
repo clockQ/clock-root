@@ -1,43 +1,71 @@
 //本地接口别名
-var RESTApiURL = "/RESTApi/company";
+var RESTApiURL = "/RESTApi/company/";
 
 // 公司注册
 function register_company(){
 	var param = {"companyName":"hangzhoushuma","email":"45678","password":"12345","phone":"0432-1234"};
-	Ajax.postJson(RESTApiURL + "/register",param,function(data,status){
-		alert(data.message);
-	});//END ajax
+	Ajax.postJson(RESTApiURL + "register", param,
+		function(json,status){
+			alert(json.message);
+		}
+	);//END ajax
 }//END $("#register_company").function
+
 
 // 公司登录
 function login_company(){
-	var param = {"email":"testmail42","password":"12345"};
-	Ajax.postJson(RESTApiURL + "/login",param,function(data,status){
-		alert(data.message);
-	});//END ajax
-}//END $("#login_btn").function
+	var param = "email=shuma.com&password=shuma";
+	Ajax.postParam(RESTApiURL + "login", param,
+		function(json,status){
+			alert(json.message);
+		}
+	);//END ajax
+}//END $("#login_company").function
 
 // 公司删除
 function remove_company(){
-	var param = {companyId:13};
-	Ajax.postJson(RESTApiURL + "/remove",param,function(data,status){
-		alert(data);
-	});//END ajax
-}//END $("#login_btn").function
+	Ajax.deleteParam(RESTApiURL + 54, null,
+		function(json,status){
+			alert(json.message);
+		}
+	);//END ajax
+}//END $("#remove_company").function
 
-// 根据id查询公司信息
-function id_company(){
-	var param = 14;
-	alert("123");
-	Ajax.getParam(RESTApiURL + "/getCompany",param,function(data,status){
-		alert(data);
-	});//END ajax
-}//END $("#login_btn").function
+// 公司信息修改
+function modify_company(){
+	var param = {"companyName":"test","email":"45678","password":"12345"};
+	Ajax.putJson(RESTApiURL + 20, param,
+		function(json,status){
+			alert(json.message);
+		}
+	);//END ajax
+}//END $("#modify_company").function
 
-// 根据名字获得公司列表
-function name_company(){
-	var param = "email = testmail42";
-	Ajax.getParam(RESTApiURL + "/getCompanyNameList",param,function(data,status){
-		alert(data);
-	});//END ajax
-}//END $("#login_btn").function
+// 根据id获得公司信息
+function findCompanyById(){
+	Ajax.getParam(RESTApiURL + 1,null,
+		function(json,status){
+			alert(json.message);
+		}
+	);//END ajax
+}//END $("#findCompanyById").function
+
+// 获得公司名称集合
+function findCompanyByName(){
+	var param = "name=test";
+	Ajax.getParam(RESTApiURL + 'getCompanyByName',param,
+		function(json,status){
+			alert(json);
+		}
+	);//END ajax
+}//END $("#findCompanyByName").function
+
+// 获得公司邮箱集合
+function findCompanyByEmail(){
+	var param = "email=test";
+	Ajax.getParam(RESTApiURL + 'getCompanyByEmail',param,
+		function(json,status){
+			alert(json);
+		}
+	);//END ajax
+}//END $("#findCompanyByEmail").function

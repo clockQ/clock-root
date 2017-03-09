@@ -5,14 +5,16 @@
   <!--引入css-->
   <title>登录</title>
 </head>
-<!--预加载JQ库-->
+<!--预加载JS库-->
 <!--无-->
 <body>
-	<input type="submit" class="login_submit" value="登 录" id="login_btn" />
-	<input type="submit" class="register_submit" value="注册" id="register_btn" />
-	<input type="submit" class="register_submit" value="删除" id="remove_btn" />
-	<input type="submit" class="register_submit" value="名字" id="name_btn" />
-	<input type="submit" class="register_submit" value="id" id="id_btn" />
+	<input type="submit" class="button" value="注 册" id="register_btn" />
+	<input type="submit" class="button" value="登 录" id="login_btn" />
+	<input type="submit" class="button" value="删除公司" id="remove_btn" />
+  <input type="submit" class="button" value="修改公司信息" id="modify_btn" />
+	<input type="submit" class="button" value="通过id查询公司信息" id="id_btn" />
+	<input type="submit" class="button" value="通过名字查询公司名字集合" id="name_btn" />
+	<input type="submit" class="button" value="通过邮箱查询公司邮箱集合" id="email_btn" />
 </body>
 </html>
 
@@ -22,20 +24,26 @@
 <script type="text/javascript" src="../static/js/page/company.js"></script>
 <!--当前页面的js片段-->
 <script type="text/javascript">
-  $(document).on('click','#login_btn',function(){
-    login_company();
-  });
   $(document).on('click','#register_btn',function(){
     register_company();
+  });
+  $(document).on('click','#login_btn',function(){
+    login_company();
   });
   $(document).on('click','#remove_btn',function(){
     remove_company();
   });
-  $(document).on('click','#name_btn',function(){
-    name_company();
+  $(document).on('click','#modify_btn',function(){
+    modify_company();
   });
   $(document).on('click','#id_btn',function(){
-    id_company();
+    findCompanyById();
+  });
+  $(document).on('click','#name_btn',function(){
+    findCompanyByName();
+  });
+  $(document).on('click','#email_btn',function(){
+    findCompanyByEmail();
   });
 </script>
 

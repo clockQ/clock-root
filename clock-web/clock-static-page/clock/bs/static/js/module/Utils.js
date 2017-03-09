@@ -1,4 +1,5 @@
 /**
+ * @author clock
  * 实现ajax的一些通用方法
  */
 var Ajax = (function(){
@@ -11,31 +12,50 @@ var Ajax = (function(){
 		/**
 		 * 使用post方法提交json的异步请求
 		 * @param  {[type]}   url      [请求地址]
-		 * @param  {[type]}   param    [json字符串,在本方法中会转为json串]
+		 * @param  {[type]}   param    [字符串,在本方法中会转为json串]
 		 * @param  {Function} callback [回调函数function(json,status){}]
 		 * @return {[type]}            [description]
 		 */
 		postJson : function(url, param, callback) {
 			this.ajax(url, 'post', JSON.stringify(param), 'json', "application/json;charset=utf-8", callback, true);
 		},
-		//不传json而是传字符串
+
+		//不传json而是传字符串,如果action采用string为参数接收时使用
 		postParam : function(url, param, callback) {
-			this.ajax(url, 'post', param, 'json', 'application/x-www-form-urlencoded charset=utf-8', callback, true);
+			this.ajax(url, 'post', param, 'json', 'application/x-www-form-urlencoded;charset=utf-8', callback, true);
 		},
 
 		/**
-		 * 使用get方法提交json的异步请求
+		 * 使用get方法提交字符串的异步请求
 		 * @param  {[type]}   url      [请求地址]
-		 * @param  {[type]}   param    [json字符串,在本方法中会转为json串]
+		 * @param  {[type]}   param    [字符串,可以为空,操作的id直接写入url]
 		 * @param  {Function} callback [回调函数function(json,status){}]
 		 * @return {[type]}            [description]
 		 */
-		getJson : function(url, param, callback) {
-			this.ajax(url, 'get', JSON.stringify(param), 'json', "application/json;charset=utf-8", callback, true);
-		},
-		//不传json而是传字符串
 		getParam : function(url, param, callback) {
-			this.ajax(url, 'get', param, 'json', 'application/x-www-form-urlencoded charset=utf-8', callback, true);
+			this.ajax(url, 'get', param, 'json', 'application/x-www-form-urlencoded;charset=utf-8', callback, true);
+		},
+
+		/**
+		 * 使用delete方法的异步请求
+		 * @param  {[type]}   url      [请求地址]
+		 * @param  {[type]}   param    [字符串,一般为空,操作的id直接写入url]
+		 * @param  {Function} callback [回调函数function(json,status){}]
+		 * @return {[type]}            [description]
+		 */
+		deleteParam : function(url, param, callback) {
+			this.ajax(url, 'delete', param, 'json', 'application/x-www-form-urlencoded;charset=utf-8', callback, true);
+		},
+
+		/**
+		 * 使用put方法提交json的异步请求
+		 * @param  {[type]}   url      [请求地址]
+		 * @param  {[type]}   param    [字符串,在本方法中会转为json串]
+		 * @param  {Function} callback [回调函数function(json,status){}]
+		 * @return {[type]}            [description]
+		 */
+		putJson : function(url, param, callback) {
+			this.ajax(url, 'put', JSON.stringify(param), 'json', 'application/json;charset=utf-8', callback, true);
 		},
 
 		/**
@@ -47,7 +67,7 @@ var Ajax = (function(){
 		 * @param {String}
 		 *            type POST/GET
 		 * @param {Object}
-		 *            param json参数命令和数据
+		 *            param 发送数据
 		 * @param {String}
 		 *            dataType 返回的数据类型
 		 * @param {String}
@@ -67,7 +87,6 @@ var Ajax = (function(){
 				dataType : dataType,
 				async : async,
 				timeout : this.TIME_OUT,
-				//crossDomain : true,
 				success : function(data) {
 					if (!data) {
 						return;
@@ -79,29 +98,10 @@ var Ajax = (function(){
 					if (callback && data) {
 						callback(data || {}, true);
 					}
-				},
-				complete : function(XMLHttpRequest, textStatus) {
-					var retErr = {};
-					if (XMLHttpRequest.status == 910
-							|| XMLHttpRequest.status == 911) {
-						alert("登录失效,请重新登录！");
-						window.location.href = "./login.html";
-						return;
-					} else if (XMLHttpRequest.status == 404) {
-						retErr['retCode'] = "SCRM-404";
-						retErr['retMessage'] = "请求数据失败,请检查请求路径！";
-						if (callback)
-							callback(retErr, false);
-					} else if (XMLHttpRequest.status == 500) {
-						retErr['retCode'] = "SCRM-500";
-						retErr['retMessage'] = "获取数据失败！请稍后再试！";
-						if (callback)
-							callback(retErr, false);
-					}
 				}
 			};
 			if (contentType != null)
-				ajaxConfig.contentType = contentType
+				ajaxConfig.contentType = contentType;
 			$.ajax(ajaxConfig);
 		},
 	}
