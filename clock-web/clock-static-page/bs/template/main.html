@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <link href="../static/module/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+  <title>差旅报销系统_毕设版</title>
+</head>
+<script type="text/javascript" src="../static/module/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../static/module/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<body>
+	<input type="submit" class="button" value="注 册" id="register_btn" />
+	<input type="submit" class="button" value="登 录" id="login_btn" />
+	<input type="submit" class="button" value="删除公司" id="remove_btn" />
+  <input type="submit" class="button" value="修改公司信息" id="modify_btn" />
+	<input type="submit" class="button" value="通过id查询公司信息" id="id_btn" />
+	<input type="submit" class="button" value="通过名字查询公司名字集合" id="name_btn" />
+	<input type="submit" class="button" value="通过邮箱查询公司邮箱集合" id="email_btn" />
+</body>
+</html>
+
+<script type="text/javascript" src="../static/js/page/company.js"></script>
+<script type="text/javascript">
+  $(document).on('click','#register_btn',function(){
+    register_company();
+  });
+  $(document).on('click','#login_btn',function(){
+    login_company();
+  });
+  $(document).on('click','#remove_btn',function(){
+    remove_company();
+  });
+  $(document).on('click','#modify_btn',function(){
+    modify_company();
+  });
+  $(document).on('click','#id_btn',function(){
+    findCompanyById();
+  });
+  $(document).on('click','#name_btn',function(){
+    findCompanyByName();
+  });
+  $(document).on('click','#email_btn',function(){
+    findCompanyByEmail();
+  });
+</script>
+
+
+

@@ -1,0 +1,13 @@
+{
+	"login":{
+		"welcome":"欢迎使用差旅报销系统",
+		"email":"登录邮箱",
+		"emailHint":"请输入邮箱账号",
+		"password":"********",
+		"passwordHint":"请输入密码",
+		"login":"登录"
+	},
+	"main":{
+		"logout":"退出登录"
+	}
+}
