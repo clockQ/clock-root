@@ -14,10 +14,11 @@ import org.clock.bs.ex.SVException;
 import org.clock.utils.dao.ICommonDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Service;
+
+import com.alibaba.dubbo.config.annotation.Service;
 
 @Transactional
-@Service("bsCompanySV")
+@Service(version = "1.0.0")
 public class BsCompanySVImpl implements	IBsCompanySV {
 	transient final static private Log log = LogFactory.getLog(BsCompanySVImpl.class);
 	

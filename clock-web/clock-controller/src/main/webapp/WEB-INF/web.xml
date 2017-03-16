@@ -22,17 +22,6 @@
 		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
 	</listener>
 
-	<!-- 加载spring配置文件 -->
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value> 
-        	classpath:spring-dubbo-consumer.xml
-    	</param-value>
-	</context-param>
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-
 	<!-- 过滤字符 -->
 	<filter>
 		<filter-name>encodingFilter</filter-name>

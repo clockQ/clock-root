@@ -12,18 +12,19 @@ import org.clock.bs.api.IBsCompanySV;
 import org.clock.bs.entity.BsCompany;
 import org.clock.bs.ex.SVException;
 import org.clock.bs.param.ResponsePOJO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.dubbo.config.annotation.Reference;
+
 @RestController
 @RequestMapping("/company")
 public class CompanyControllerforREST {
 	transient final static private Log log = LogFactory.getLog(CompanyControllerforREST.class);
-	@Autowired
+	@Reference(version = "1.0.0") 
 	private IBsCompanySV bsCompanySV;
 
 	/**

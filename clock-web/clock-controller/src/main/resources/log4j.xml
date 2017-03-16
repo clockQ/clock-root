@@ -24,39 +24,19 @@
 <!--     </appender> -->
 
     <!-- 3rdparty Loggers -->
-	<logger name="org.hibernate">
-		<level value="error"/>
-	</logger>
-	
-	<logger name="com.jolbox.bonecp">
-		<level value="error"/>
-	</logger>
-
-    <logger name="org.apache.shiro">
-        <level value="error"/>
-    </logger>
-    
-    <logger name="net.sf.ehcache">
-        <level value="error"/>
-    </logger>
-    
-    <logger name="org.activiti">
-        <level value="error" />
-    </logger>
-    
     <logger name="org.springframework">
-        <level value="error" />
-    </logger>
-    
-    <logger name="org.apache.ibatis">
         <level value="error" />
     </logger>
     
     <logger name="com.alibaba.dubbo">
         <level value="error" />
     </logger>
+        
+    <logger name="org.I0Itec.zkclient">
+        <level value="error" />
+    </logger>
     
-    <logger name="org.quartz">
+    <logger name="org.apache.zookeeper">
         <level value="error" />
     </logger>
     

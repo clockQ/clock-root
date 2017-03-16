@@ -5,9 +5,21 @@
 		"emailHint":"请输入邮箱账号",
 		"password":"********",
 		"passwordHint":"请输入密码",
-		"login":"登录"
+		"login":"登录",
+		"loginLoading":"正在登陆"
 	},
-	"main":{
-		"logout":"退出登录"
+	"index":{
+		"profile":"设置",
+		"contacts":"联系人",
+		"mailbox":"消息",
+		"logout":"退出",
+		"dashboards":"表格",
+		"dashboards1":"表格1",
+		"dashboards2":"表格2",
+		"dashboards3":"表格3",
+		"dashboards4":"表格4",
+		"dashboards5":"表格5",
+		"layouts":"layouts",
+		"welcome":"欢迎使用差旅报销系统"
 	}
 }

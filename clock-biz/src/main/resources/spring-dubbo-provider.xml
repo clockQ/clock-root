@@ -7,25 +7,28 @@
 			http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 	<!-- 提供方应用信息，用于依赖关系 -->
 	<dubbo:application name="clock-bs-provider" />
-	
-	<!-- dubbo接口去除注册中心，采用直连的方式  -->
-    <dubbo:registry address="N/A" /> 
-	<dubbo:provider timeout="1200000" />
+
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
-	<!-- <dubbo:registry protocol="zookeeper" address="127.0.0.1:6060" /> -->
+	<dubbo:registry protocol="zookeeper" address="127.0.0.1:25050" />
+	
+	<!-- dubbo接口去除注册中心，采用直连的方式 -->
+	<!-- <dubbo:registry address="N/A" /> -->
+	<!-- <dubbo:provider timeout="120000" /> -->
 	<!--dubbo集群开发 -->
-	<!--<dubbo:registry protocol="zookeeper" address="xx.xx.xx.xx:2181,xx.xx.xx.68:2181" />-->
+	<!--<dubbo:registry protocol="zookeeper" address="xx.xx.xx.xx:2181,xx.xx.xx.68:2181"/> -->
 	<!--使用multicast广播注册中心暴露服务地址 -->
 	<!-- <dubbo:registry address="multicast://10.57.41.19:1234" /> -->
 	<!-- 配置监控的服务地址和IP -->
 	<!-- <dubbo:monitor address="127.0.0.1:7070"/> --><!-- 暂时没配置 -->
 
 	<!-- 用dubbo协议在26060端口暴露服务 -->
-	<dubbo:protocol name="dubbo" port="26060"/>
-
+	<dubbo:protocol name="dubbo" port="26060" />
+	
 	<!-- 发布这个服务 -->
+	<!-- 基于注解配置,在服务上使用@Service(version = "1.0.0")  -->
+	<dubbo:annotation package="org.clock.bs.server" />
+	
 	<!-- 声明需要暴露的服务接口,直连时，token=true要去掉，会有不安全因素，但直连一般用于内部使用，安全问题可以暂忽略 -->
-	<dubbo:service interface="org.clock.bs.api.IBsCompanySV"
-		ref="bsCompanySV" version="1.0"/>
-
+	<!-- <dubbo:service interface="org.clock.bs.api.IBsCompanySV" -->
+	<!-- ref="bsCompanySV" version="1.0"/> -->
 </beans>  
