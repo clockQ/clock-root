@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>报销单管理</title>
+    <link href="../static/module/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/module/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../static/css/animate.css" rel="stylesheet">
+    <link href="../static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="../static/js/plugins/gritter/jquery.gritter.css" rel="stylesheet">
+    <link href="../static/css/plugins/steps/jquery.steps.css" rel="stylesheet">
+    <link href="../static/css/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet">    
+    <link href="../static/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="../static/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <link href="../static/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
+    <link href="../static/css/plugins/jqGrid/ui.jqgrid.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
+</head>
+<!--预加载JS库-->
+<script type="text/javascript" src="../static/module/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../static/module/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/module/i18next-1.11.2.min.js"></script>
+<script type="text/javascript">
+//初始化i18n
+$(document).ready(function() {
+    //初始化汉字
+    initI18n();
+    //初始化用户信息
+    initInfo();
+    //初始化左侧菜单
+    initMenu(1);
+});
+</script>
+
+<body>
+    <div id="wrapper">
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="sidebar-collapse">
+                <ul class="nav metismenu" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <span>
+                              <img alt="image" class="img-circle" src="../userdata/img/profile_small.jpg" />
+                            </span>
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear"> 
+                                <span class="block m-t-xs"> 
+                                  <strong class="font-bold" id="name">Name</strong>
+                                </span>
+                                <span class="text-muted text-xs block" id="position">
+                                  Position 
+                                  <b class="caret"></b>
+                                </span>
+                                </span>
+                            </a>
+                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                                <li><a href="profile.html" data-i18n="system.profile">Profile</a></li>
+                                <li><a href="contacts.html" data-i18n="system.contacts">Contacts</a></li>
+                                <li><a href="mailbox.html" data-i18n="system.mailbox">Mailbox</a></li>
+                                <li class="divider"></li>
+                                <li><a href="login.html" data-i18n="system.logout">Logout</a></li>
+                            </ul>
+                        </div>
+                        <div class="logo-element">
+                            IN+
+                        </div>
+                    </li>
+                    <li class="active" id="consumeManager" style="display: none;">
+                        <a href="#"><i class="fa fa-files-o"></i> <span class="nav-label" data-i18n="menu.consumeManager">Consume Manager</span> <span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level">
+                            <li class="active" id="consumeForm" style="display: none;">
+                              <a href="consumeForm.html" >
+                                <span data-i18n="menu.consume.form">Consume Form</span>
+                                <span class="label label-primary pull-right">HOT</span>
+                              </a>
+                            </li>
+                            <li id="consumeFlow" style="display: none;">
+                                <a href="consumeFlow.html" data-i18n="menu.consume.flow">
+                                Consume Flow
+                              </a>
+                            </li>
+                            <li id="consumeAgree" style="display: none;">
+                                <a href="consumeAgree.html" data-i18n="menu.consume.agree">
+                                Consume Agree
+                              </a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message" data-i18n="system.welcome">Welcome to GraduationProject.</span>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-envelope"></i> <span class="label label-warning" id="colleaguesInforms">16</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-messages">
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="../userdata/img/a7.jpg">
+                                        </a>
+                                        <div class="media-body">
+                                            <small class="pull-right">46h ago</small>
+                                            <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>.
+                                            <br>
+                                            <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="../userdata/img/a4.jpg">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="pull-right text-navy">5h ago</small>
+                                            <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>.
+                                            <br>
+                                            <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="dropdown-messages-box">
+                                        <a href="profile.html" class="pull-left">
+                                            <img alt="image" class="img-circle" src="../userdata/img/profile.jpg">
+                                        </a>
+                                        <div class="media-body ">
+                                            <small class="pull-right">23h ago</small>
+                                            <strong>Monica Smith</strong> love <strong>Kim Smith</strong>.
+                                            <br>
+                                            <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="mailbox.html">
+                                            <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                                <i class="fa fa-bell"></i> <span class="label label-primary" id="systemInforms">16</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-alerts">
+                                <li>
+                                    <a href="mailbox.html">
+                                        <div>
+                                            <i class="fa fa-envelope fa-fw"></i> You have 4 messages
+                                            <span class="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="profile.html">
+                                        <div>
+                                            <i class="fa fa-twitter fa-fw"></i> 1 New Followers
+                                            <span class="pull-right text-muted small">12 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="grid_options.html">
+                                        <div>
+                                            <i class="fa fa-upload fa-fw"></i> 1 Server Rebooted
+                                            <span class="pull-right text-muted small">4 minutes ago</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <div class="text-center link-block">
+                                        <a href="notifications.html">
+                                            <strong>See All Alerts</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="login.html" data-i18n="system.logout">
+                                <i class="fa fa-sign-out"></i> Log out
+                            </a>
+                        </li>
+                        <li>
+                            <a class="right-sidebar-toggle">
+                                <i class="fa fa-tasks"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            <!--本页操作区-->
+            <div class="row wrapper border-bottom white-bg page-heading">
+                <div class="col-sm-8">
+                    <h2>This is main title</h2>
+                    <ol class="breadcrumb">
+                        <li>
+                            <a href="index.html">所在位置</a>
+                        </li>
+                        <li class="active">
+                            <strong>报销管理</strong>
+                            <strong>报销单管理</strong>
+                        </li>
+                    </ol>
+                </div>
+                <div class="col-sm-4">
+                    <div class="title-action">
+                        <a class="btn btn-primary" id="createFormBtn"
+                        data-toggle="modal" data-target="#createFormModal" data-backdrop="static">新的报销</a>
+                    </div>
+                </div>
+            </div>
+            <!-- 表单管理区 -->
+            <div class="wrapper wrapper-content animated fadeInRight">
+                <div class="row">
+                    <div class="col-xs-3">
+                        <div class="contact-box center-version">
+                            <a href="consumeFormInfo.html">
+                                <h3><strong>正在审批</strong></h3>
+                                <p><i class="fa fa-map-marker"></i>天津</p>
+                                <address>
+                                    <strong>总费用:988.4</strong>
+                                    <br> 
+                                    <br> 差补等级:75元/天
+                                    <br> 差补天数:15天
+                                    <br> 报销内容:火车票,差补,住宿...
+                                </address>
+                            </a>
+                            <div class="contact-box-footer">
+                                <div class="m-t-xs btn-group">
+                                    <a class="btn btn-xs btn-white">
+                                        <i class="fa fa-trash"></i> 
+                                        <span data-i18n="consumeForm.delete">delete <span>
+                                    </a>
+                                    <a class="btn btn-xs btn-white">
+                                        <i class="fa fa-newspaper-o"></i> 
+                                        <span data-i18n="consumeForm.createByThis"">create By This<span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+            <!--模态框导向式新增-->
+            <div class="modal inmodal" id="createFormModal"
+                role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content animated bounceInRight">
+                        <div class="modal-body">
+                            <div class="ibox-content">
+                                <form id="consumeInfoForm" action="#" class="wizard-big">
+                                    <h1 data-i18n="consumeForm.formModal.projectInfo">Project Info</h1>
+                                    <fieldset>
+                                        <h2 data-i18n="consumeForm.formModal.inputProjectNumber">Please Input Project Number</h2>
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <input id="projectNumber" name="projectNumber" type="text" class="form-control">
+                                                    <a class="btn btn-xs btn-white" id="searchProjectBtn"
+                                                        style="float:right">
+                                                        <i class="fa fa-search"></i> 
+                                                        <span data-i18n="consumeForm.formModal.searchProject">
+                                                            Search Project
+                                                        <span>
+                                                    </a>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label data-i18n="consumeForm.formModal.projectName">Project Name</label>
+                                                    <input id="projectName" type="text" class="form-control required" readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label data-i18n="consumeForm.formModal.header">Project Header</label>
+                                                    <input id="header" type="text" class="form-control required"  readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label data-i18n="consumeForm.formModal.startTime">Project Start Time</label>
+                                                    <input id="startTime" type="text" class="form-control required"  readonly="readonly">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label data-i18n="consumeForm.formModal.available">Available</label>
+                                                    <input id="available" type="text" class="form-control required"  readonly="readonly">
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="text-center">
+                                                    <div style="margin-top: 20px">
+                                                        <i class="fa fa-sign-in" style="font-size: 180px;color: #e5e5e5 "></i>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <h1 data-i18n="consumeForm.formModal.consumeStandard">Consume Standard</h1>
+                                    <fieldset>
+                                        <h2 data-i18n="consumeForm.formModal.baseConsumeInfo">Base Consume Info</h2>
+                                        <div class="row">
+                                            <div class="col-lg-6">
+                                                <div class="form-group" id="data_3">
+                                                    <label data-i18n="consumeForm.formModal.consumeDay">Consume Day</label>
+                                                    <div id="reportrange" class="form-control">
+                                                        <i class="fa fa-calendar"></i>
+                                                        <span></span> <b class="caret"></b>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label data-i18n="consumeForm.formModal.consumeStandard">Consume Standard</label>
+                                                    <div class="input-group" style='width:100%'>
+                                                        <select class="form-control" style='min-width:100%' 
+                                                        name="consumeStandardSelect" id="consumeStandardSelect">
+                                                            <option value="">  </option>
+                                                            <option value="1" data-i18n="consumeForm.formModal.75Consume">75 Yuan/day</option>
+                                                            <option value="2" data-i18n="consumeForm.formModal.120Consume">120 Yuan/day</option>
+                                                            <option value="3" data-i18n="consumeForm.formModal.240Consume">240 Yuan/day</option>
+                                                            <option value="4" data-i18n="consumeForm.formModal.480Consume">480 Yuan/day</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <label data-i18n="consumeForm.formModal.accommodationStandard">Accommodation Standard</label>
+                                                    <div class="input-group" style='width:100%'>
+                                                        <select  class="form-control" style='min-width:100%' 
+                                                         name="accommodationStandardSelect" 
+                                                         id="accommodationStandardSelect">
+                                                            <option value="">  </option>
+                                                            <option value="1" data-i18n="consumeForm.formModal.160Accommodation">Less 160 Yuan/day</option>
+                                                            <option value="2" data-i18n="consumeForm.formModal.220Accommodation">Less 220 Yuan/day</option>
+                                                            <option value="3" data-i18n="consumeForm.formModal.280Accommodation">Less 280 Yuan/day</option>
+                                                            <option value="4" data-i18n="consumeForm.formModal.340Accommodation">Less 340 Yuan/day</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group"">
+                                                    <label data-i18n="consumeForm.formModal.consumePurpose">Consume Purpose</label>
+                                                    <div class="input-group" style='width:100%'>
+                                                        <select data-placeholder="Select Multiple ..." class="form-control chosen-select required" multiple style='min-width:100%' 
+                                                        data-i18n="[data-placeholder]consumeForm.formModal.selectMultiple" name="consumePurpose" id="consumePurpose">
+                                                            <option value="1" data-i18n="consumeForm.formModal.technicalSupport">Technical Support</option>
+                                                            <option value="2" data-i18n="consumeForm.formModal.businessNegotiation">Business Negotiation</option>
+                                                            <option value="3" data-i18n="consumeForm.formModal.learningSkills">Learning Skills</option>
+                                                            <option value="4" data-i18n="consumeForm.formModal.otherMultiple">Other Multiple</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <h1 data-i18n="consumeForm.formModal.otherSubsidies">Other Subsidies</h1>
+                                    <fieldset style="width:100%;">
+                                        <div class="tabs-container">
+                                        <div class="tabs-left row">
+                                            <div class="col-xs-1">
+                                                <ul class="nav nav-tabs">
+                                                    <li class="active" style="display:block;"><a data-toggle="tab" href="#foodTabDiv"> <i class="fa fa-male"></i>餐补</a></li>
+                                                    <li class="" style="display:block;"><a data-toggle="tab" href="#accommodationTabDiv"><i class="fa fa-home"></i>房补</a></li>
+                                                    <li class="" style="display:block;"><a data-toggle="tab" href="#travelTabDiv"><i class="fa fa-bus"></i>车补</a></li>
+                                                    <button id="btnAdd" type="button" class="btn  btn-success" data-toggle="modal" data-target="#foodInfoModal">
+                                                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
+                                                    </button>
+                                                    <button id="btnEdit" type="button" class="btn   btn-warning" data-toggle="modal" data-target="#foodInfoModal">
+                                                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
+                                                    </button>
+                                                    <button id="btnDel" type="button" class="btn  btn-danger">
+                                                        <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>删除
+                                                    </button>
+                                                    <ul class="pager">
+                                                      <li class="disabled" id="previousPage" style="display: block;"><a href="#" id="previousPageBtn">上页</a></li>
+                                                      <li id="nextPage" style="display: block;"><a href="#" id="nextPageBtn">下页</a></li>
+                                                    </ul>
+                                            </div>
+                                            <div class="tab-content col-xs-11">
+                                                <div id="foodTabDiv" class="tab-pane active">
+                                                    <div class="panel-body" style="width:100%;margin-left:0">
+                                                        <table id="foodTabel" class="table table-bordered table-striped">
+                                                            <thead>  
+                                                                <th class="check-header hidden-xs">  
+                                                                <input id="checkAll" name="checkAll" type="checkbox">  
+                                                          
+                                                                <th>编号</th>  
+                                                                <th>消费时间</th>  
+                                                                <th>消费地点</th>  
+                                                                <th>消费金额</th>  
+                                                                <th>详情</th>
+                                                            </thead>  
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <div id="accommodationTabDiv" class="tab-pane">
+                                                    <div class="panel-body" style="width:100%;margin-left:0">
+                                                     
+                                                    </div>
+                                                </div>
+                                                <div id="travelTabDiv" class="tab-pane">
+                                                    <div class="panel-body" style="width:100%;margin-left:0">
+                                              
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    </fieldset>
+                                    <h1 data-i18n="consumeForm.formModal.Finish">Finish</h1>
+                                    <fieldset>
+                                        <h2>Terms and Conditions</h2>
+                                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
+                                        <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                    </fieldset>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            
+
+            <!--模态框新增食补-->
+            <div class="modal inmodal" id="foodInfoModal"
+                role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content animated bounceInRight">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="foodInfoModalLabel">新增或修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <h2 >消费时间</h2>
+                                    <input id="consumptionTime" type="text" class="form-control">
+                                    <h2 >消费地点</h2>
+                                    <input id="consumptionSite" type="text" class="form-control">
+                                    <h2 >消费金额</h2>
+                                    <input id="consumptionSum" type="text" class="form-control">
+                                    <h2 >详情</h2>
+                                    <input id="consumptionNote" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="foodInfoModalSubmit">提交更改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div class="small-chat-box fadeInRight animated">
+                <div class="heading" draggable="true" data-i18n="system.smallChat">
+                    <small class="chat-date pull-right">
+                    02.19.2015
+                </small> Small chat
+                </div>
+                <div class="content">
+                    <div class="left">
+                        <div class="author-name">
+                            吕子乔<small class="chat-date">
+                        10:02 am
+                    </small>
+                        </div>
+                        <div class="chat-message active">
+                            我看到母猪排队跳进了水沟里.
+                        </div>
+                    </div>
+                    <div class="right">
+                        <div class="author-name">
+                            曾小贤
+                            <small class="chat-date">
+                            10:24 am
+                        </small>
+                        </div>
+                        <div class="chat-message">
+                            你比母猪更无聊.
+                        </div>
+                    </div>
+                    <div class="left">
+                        <div class="author-name">
+                            胡一菲
+                            <small class="chat-date">
+                            10:45 pm
+                        </small>
+                        </div>
+                        <div class="chat-message active">
+                            快去写毕设.
+                        </div>
+                    </div>
+                </div>
+                <div class="form-chat">
+                    <div class="input-group input-group-sm">
+                        <input type="text" class="form-control"> <span class="input-group-btn"> <button
+                        class="btn btn-primary" type="button" data-i18n="system.sendChat">Send
+                </button> </span></div>
+                </div>
+            </div>
+            <div id="small-chat">
+                <span class="badge badge-warning pull-right" id="chatNum">5</span>
+                <a class="open-small-chat">
+                    <i class="fa fa-comments"></i>
+                </a>
+            </div>
+            <div id="right-sidebar">
+                <div class="sidebar-container">
+                    <ul class="nav nav-tabs navs-3">
+                        <li class="active"><a data-toggle="tab" href="#tab-1" data-i18n="system.notes">
+                        Notes
+                    </a></li>
+                        <li><a data-toggle="tab" href="#tab-2" data-i18n="system.projects">
+                        Projects
+                    </a></li>
+                        <li class="">
+                            <a data-toggle="tab" href="#tab-3" data-i18n="system.settings">
+                                <i class="fa fa-gear"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="tab-1" class="tab-pane active">
+                            <div class="sidebar-title">
+                                <h3 data-i18n="system.latestNotes"> <i class="fa fa-comments-o"></i> Latest Notes</h3>
+                                <small><i class="fa fa-tim"></i> You have 10 new message.</small>
+                            </div>
+                            <div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a1.jpg">
+                                            <div class="m-t-xs">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            There are many variations of passages of Lorem Ipsum available.
+                                            <br>
+                                            <small class="text-muted">Today 4:21 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a2.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            The point of using Lorem Ipsum is that it has a more-or-less normal.
+                                            <br>
+                                            <small class="text-muted">Yesterday 2:45 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a3.jpg">
+                                            <div class="m-t-xs">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            Mevolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                            <br>
+                                            <small class="text-muted">Yesterday 1:10 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a4.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the
+                                            <br>
+                                            <small class="text-muted">Monday 8:37 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a8.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            All the Lorem Ipsum generators on the Internet tend to repeat.
+                                            <br>
+                                            <small class="text-muted">Today 4:21 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a7.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+                                            <br>
+                                            <small class="text-muted">Yesterday 2:45 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a3.jpg">
+                                            <div class="m-t-xs">
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                                <i class="fa fa-star text-warning"></i>
+                                            </div>
+                                        </div>
+                                        <div class="media-body">
+                                            The standard chunk of Lorem Ipsum used since the 1500s is reproduced below.
+                                            <br>
+                                            <small class="text-muted">Yesterday 1:10 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="sidebar-message">
+                                    <a href="#">
+                                        <div class="pull-left text-center">
+                                            <img alt="image" class="img-circle message-avatar" src="../userdata/img/a4.jpg">
+                                        </div>
+                                        <div class="media-body">
+                                            Uncover many web sites still in their infancy. Various versions have.
+                                            <br>
+                                            <small class="text-muted">Monday 8:37 pm</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="tab-2" class="tab-pane">
+                            <div class="sidebar-title">
+                                <h3 data-i18n="system.latestProjects"> <i class="fa fa-cube"></i> Latest projects</h3>
+                                <small><i class="fa fa-tim"></i> You have 14 projects. 10 not completed.</small>
+                            </div>
+                            <ul class="sidebar-list">
+                                <li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Business valuation</h4> It is a long established fact that a reader will be distracted.
+                                        <div class="small">Completion with: 22%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 22%;" class="progress-bar progress-bar-warning"></div>
+                                        </div>
+                                        <div class="small text-muted m-t-xs">Project end: 4:00 pm - 12.06.2014</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Contract with Company </h4> Many desktop publishing packages and web page editors.
+                                        <div class="small">Completion with: 48%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 48%;" class="progress-bar"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Meeting</h4> By the readable content of a page when looking at its layout.
+                                        <div class="small">Completion with: 14%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 14%;" class="progress-bar progress-bar-info"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="label label-primary pull-right">NEW</span>
+                                        <h4>The generated</h4>
+                                        <!--<div class="small pull-right m-t-xs">9 hours ago</div>-->
+                                        There are many variations of passages of Lorem Ipsum available.
+                                        <div class="small">Completion with: 22%</div>
+                                        <div class="small text-muted m-t-xs">Project end: 4:00 pm - 12.06.2014</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Business valuation</h4> It is a long established fact that a reader will be distracted.
+                                        <div class="small">Completion with: 22%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 22%;" class="progress-bar progress-bar-warning"></div>
+                                        </div>
+                                        <div class="small text-muted m-t-xs">Project end: 4:00 pm - 12.06.2014</div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Contract with Company </h4> Many desktop publishing packages and web page editors.
+                                        <div class="small">Completion with: 48%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 48%;" class="progress-bar"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <div class="small pull-right m-t-xs">9 hours ago</div>
+                                        <h4>Meeting</h4> By the readable content of a page when looking at its layout.
+                                        <div class="small">Completion with: 14%</div>
+                                        <div class="progress progress-mini">
+                                            <div style="width: 14%;" class="progress-bar progress-bar-info"></div>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <span class="label label-primary pull-right">NEW</span>
+                                        <h4>The generated</h4>
+                                        <!--<div class="small pull-right m-t-xs">9 hours ago</div>-->
+                                        There are many variations of passages of Lorem Ipsum available.
+                                        <div class="small">Completion with: 22%</div>
+                                        <div class="small text-muted m-t-xs">Project end: 4:00 pm - 12.06.2014</div>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="tab-3" class="tab-pane">
+                            <div class="sidebar-title">
+                                <h3 data-i18n="system.systemSettings"><i class="fa fa-gears"></i> Settings</h3>
+                                <small><i class="fa fa-tim"></i> You have 14 projects. 10 not completed.</small>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.showNotifications">
+                                Show notifications
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example">
+                                        <label class="onoffswitch-label" for="example">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.disableChat">
+                                Disable Chat
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="collapsemenu" checked class="onoffswitch-checkbox" id="example2">
+                                        <label class="onoffswitch-label" for="example2">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.enableHistory">
+                                Enable history
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example3">
+                                        <label class="onoffswitch-label" for="example3">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.showCharts">
+                                Show charts
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example4">
+                                        <label class="onoffswitch-label" for="example4">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.offlineUsers">
+                                Offline users
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="collapsemenu" class="onoffswitch-checkbox" id="example5">
+                                        <label class="onoffswitch-label" for="example5">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.globalSearch">
+                                Global search
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" checked name="collapsemenu" class="onoffswitch-checkbox" id="example6">
+                                        <label class="onoffswitch-label" for="example6">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="setings-item">
+                                <span data-i18n="system.setting.autoUpdate">
+                                Auto Update
+                            </span>
+                                <div class="switch">
+                                    <div class="onoffswitch">
+                                        <input type="checkbox" name="collapsemenu" class="onoffswitch-checkbox" id="example7">
+                                        <label class="onoffswitch-label" for="example7">
+                                            <span class="onoffswitch-inner"></span>
+                                            <span class="onoffswitch-switch"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="sidebar-content">
+                                <h4 data-i18n="system.systemSettings">Settings</h4>
+                                <div class="small" data-i18n="system.systemInfo">
+                                    I belive that. Lorem Ipsum is simply dummy text of the printing and typesetting industry. And typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. Over the years, sometimes by accident, sometimes on purpose (injected humour and the like).
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</body>
+
+</html>
+<!-- Mainly scripts -->
+<script src="../static/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../static/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<!-- Flot -->
+<script src="../static/js/plugins/flot/jquery.flot.js"></script>
+<script src="../static/js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+<script src="../static/js/plugins/flot/jquery.flot.spline.js"></script>
+<script src="../static/js/plugins/flot/jquery.flot.resize.js"></script>
+<script src="../static/js/plugins/flot/jquery.flot.pie.js"></script>
+<!-- Peity -->
+<script src="../static/js/plugins/peity/jquery.peity.min.js"></script>
+<script src="../static/js/demo/peity-demo.js"></script>
+<!-- Custom and plugin javascript -->
+<script src="../static/js/inspinia.js"></script>
+<script src="../static/js/plugins/pace/pace.min.js"></script>
+<!-- jQuery UI -->
+<script src="../static/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- GITTER -->
+<script src="../static/js/plugins/gritter/jquery.gritter.min.js"></script>
+<!-- Sparkline -->
+<script src="../static/js/plugins/sparkline/jquery.sparkline.min.js"></script>
+<!-- Sparkline demo data  -->
+<script src="../static/js/demo/sparkline-demo.js"></script>
+<!-- ChartJS-->
+<script src="../static/js/plugins/chartJs/Chart.min.js"></script>
+<!-- Toastr -->
+<script src="../static/js/plugins/toastr/toastr.min.js"></script>
+<!-- Chosen -->
+<script src="../static/js/plugins/chosen/chosen.jquery.js"></script>
+<!-- Date range use moment.js same as full calendar plugin -->
+<script src="../static/js/plugins/fullcalendar/moment.min.js"></script>
+<!-- Data picker -->
+<script src="../static/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+<!-- Date range picker -->
+<script src="../static/js/plugins/daterangepicker/daterangepicker.js"></script>
+<!-- Steps -->
+<script src="../static/js/plugins/staps/jquery.steps.min.js"></script>
+<!-- Jquery Validate -->
+<script src="../static/js/plugins/validate/jquery.validate.min.js"></script>
+<!-- jqGrid -->
+<script src="../static/js/plugins/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="../static/js/plugins/jqGrid/i18n/grid.locale-en.js"></script>
+<script src="../static/js/plugins/jqGrid/jquery.jqGrid.min.js"></script>
+<script src="../static/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+
+<!-- 自定义js-->
+<script src="../static/js/Utils.js"></script>
+<script src="../static/js/page/common.js"></script>
+<script src="../static/js/page/consumeForm.js"></script>
+<script>
+// 渲染模态框的新增表单
+$(document).on('click', '#createFormBtn', function() {
+    initCreateForm();
+    intiDaterangepicker();
+    initSelector();
+    initFoodTable(page);
+    initAccommodationTable();
+    initTravelTable();
+});
+//刷新页面,不然下次加载css不渲染
+$("#createFormModal").on("hidden.bs.modal", function() {  
+    location.replace(document.referrer);
+}); 
+//根据项目编号查询信息按钮响应
+$(document).on('click', '#searchProjectBtn', function() {
+    initSearchProjectResult();
+});
+var page = 1;
+//食品表中的数据总数
+var foodTableSum = myFoodData.length;
+//最大页数
+var maxPage = Math.ceil(foodTableSum/10) ;
+$(document).ready(function() {
+    initFoodTable(page);
+});
+$(document).on('click', '#previousPageBtn', function() {
+    $("#nextPage").removeClass('disabled');
+    page -= 1;
+    if(page == 1){
+        $("#previousPage").addClass('disabled');
+    }
+    if(page >= 1){        
+        initFoodTable(page);
+    }else{
+        page += 1;
+    }
+});    
+$(document).on('click', '#nextPageBtn', function() {
+    $("#previousPage").removeClass('disabled');
+    page += 1;
+    if(page == maxPage){
+        $("#nextPage").addClass('disabled');
+    }
+    if(page <= maxPage){        
+        initFoodTable(page);
+    }else{
+        page -= 1;
+    }
+});
+$(document).on('click', '#btnDel', function() {
+    $('input[name="checkbox"]:checked').each(function(){ 
+        //在json中删除
+        delFoodTable($(this)[0].id);  
+    }); 
+    //重新载入table
+    initFoodTable(page);
+});
+$(document).on('click', '#btnEdit', function() {
+    alert("editors");
+    $(":checked").parent().editableTableWidget();//整行的可以编辑 
+});
+</script>

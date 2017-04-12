@@ -1,10 +1,10 @@
 //本地接口别名
-var RESTApiURL = "/RESTApi/company/";
+var RESTApiURL = "/RESTApi/";
 
 // 公司注册
 function register_company(email,password) {
     var param = { "companyName": "hangzhoushuma", "email": "45678", "password": "12345", "phone": "0432-1234" };
-    Ajax.postJson(RESTApiURL + "register", param,
+    Ajax.postJson(RESTApiURL + "company/register", param,
         function(json, status) {
             alert(json.message);
         }
@@ -13,7 +13,7 @@ function register_company(email,password) {
 
 // 公司删除
 function remove_company(){
-	Ajax.deleteParam(RESTApiURL + 54, null,
+	Ajax.deleteParam(RESTApiURL + "company/" + 54, null,
 		function(json,status){
 			alert(json.message);
 		}
@@ -23,7 +23,7 @@ function remove_company(){
 // 公司信息修改
 function modify_company(){
 	var param = {"companyName":"test","email":"45678","password":"12345"};
-	Ajax.putJson(RESTApiURL + 20, param,
+	Ajax.putJson(RESTApiURL + "company/" + 20, param,
 		function(json,status){
 			alert(json.message);
 		}
@@ -32,7 +32,7 @@ function modify_company(){
 
 // 根据id获得公司信息
 function findCompanyById(){
-	Ajax.getParam(RESTApiURL + 1,null,
+	Ajax.getParam(RESTApiURL + "company/" + 1,null,
 		function(json,status){
 			alert(json.message);
 		}
@@ -42,7 +42,7 @@ function findCompanyById(){
 // 获得公司名称集合
 function findCompanyByName(){
 	var param = "name=test";
-	Ajax.getParam(RESTApiURL + 'getCompanyByName',param,
+	Ajax.getParam(RESTApiURL + 'company/getCompanyByName',param,
 		function(json,status){
 			alert(json);
 		}
@@ -52,7 +52,7 @@ function findCompanyByName(){
 // 获得公司邮箱集合
 function findCompanyByEmail(){
 	var param = "email=test";
-	Ajax.getParam(RESTApiURL + 'getCompanyByEmail',param,
+	Ajax.getParam(RESTApiURL + 'company/getCompanyByEmail',param,
 		function(json,status){
 			alert(json);
 		}

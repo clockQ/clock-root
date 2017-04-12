@@ -1,3 +1,86 @@
 {
-	"null":"null"
+	"login":{
+		"email":"登录邮箱",
+		"emailHint":"请输入邮箱账号",
+		"password":"********",
+		"passwordHint":"请输入密码",
+		"login":"登录",
+		"loginLoading":"正在登陆"
+	},
+	"system":{
+		"welcome":"欢迎使用差旅报销系统",
+		"profile":"设置",
+		"contacts":"联系人",
+		"mailbox":"消息",
+		"logout":"退出",
+		"smallChat":"短信息",
+		"sendChat":"发送",
+		"notes":"笔记",
+		"latestNotes":"最新笔记",
+		"projects":"工程",
+		"latestProjects":"最新工程",
+		"settings":"设置",
+		"systemSettings":"系统设置",
+		"setting":{
+			"systemSettings":"系统设置",
+			"showNotifications":"显示通知",
+			"disableChat":"禁用聊天",
+			"enableHistory":"启用历史记录",
+			"showCharts":"显示聊天",
+			"offlineUsers":"显示离线成员",
+			"globalSearch":"全局搜索",
+			"autoUpdate":"自动接收消息"
+		},
+		"systemInfo":"可以在此处对通知提醒进行设置"
+	},
+	"menu":{
+		"consumeManager":"报销管理",
+		"consume":{
+			"form":"报销单管理",
+			"flow":"进度查看",
+			"agree":"报销审批"
+		},
+		"dashboards":"表格",
+		"dashboards1":"表格1",
+		"dashboards2":"表格2",
+		"dashboards3":"表格3",
+		"dashboards4":"表格4",
+		"dashboards5":"表格5",
+		"layouts":"布局",
+		"index":"统计"
+	},
+	"consumeForm":{
+		"delete":"删除",
+		"createByThis":"以此创建",
+		"formModal":{
+			"title":"创建报销单", 
+			"projectInfo":"项目信息",
+			"inputProjectNumber":"请输入项目编号",
+			"searchProject":"查找项目",
+			"projectName":"项目名称",
+			"header":"项目经理",
+			"startTime":"项目立项时间",
+			"available":"是否可用",
+			"consumeStandard":"差补标准",
+			"baseConsumeInfo":"基本差补信息",
+			"consumeDay":"出差时间",
+			"accommodationStandard":"住宿标准",
+			"160Accommodation":"低于 160元/天",
+			"220Accommodation":"低于 220元/天",
+			"280Accommodation":"低于 280元/天",
+			"340Accommodation":"低于 340元/天",
+			"75Consume":"75 元/天",
+			"120Consume":"120 元/天",
+			"240Consume":"240 元/天",
+			"480Consume":"480 元/天",
+			"consumePurpose":"出差目的",
+			"selectMultiple":"选择出差目的..",
+			"technicalSupport":"技术支持",
+			"businessNegotiation":"商务谈判",
+			"learningSkills":"学习技能",
+			"otherMultiple":"其他原因",
+			"otherSubsidies":"其他补助",
+			"Finish":"完成"
+		}
+	}
 }
