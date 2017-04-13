@@ -1,5 +1,10 @@
 package org.clock.bs.controller;
 
+import org.clock.bs.api.IBsCompanySV;
+import org.clock.bs.entity.BsCompanyBo;
+import org.clock.bs.ex.SVException;
+import org.clock.bs.param.ResponsePOJO;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,10 +13,7 @@ import javax.validation.Valid;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.clock.bs.api.IBsCompanySV;
-import org.clock.bs.entity.BsCompany;
-import org.clock.bs.ex.SVException;
-import org.clock.bs.param.ResponsePOJO;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +24,11 @@ import com.alibaba.dubbo.config.annotation.Reference;
 
 @RestController
 @RequestMapping("/company")
-public class CompanyControllerforREST {
-	transient final static private Log log = LogFactory.getLog(CompanyControllerforREST.class);
+@Component
+public class CompanyControllerForREST {
+	transient final static private Log log = LogFactory.getLog(CompanyControllerForREST.class);
 	@Reference(version = "1.0.0") 
-	private IBsCompanySV bsCompanySV;
+	private IBsCompanySV BsCompanyBoSV;
 
 	/**
 	 * 注册公司账号
@@ -34,7 +37,7 @@ public class CompanyControllerforREST {
 	 * @return	成功返回带id的公司引用
 	 */
 	@RequestMapping(value="/register", method=RequestMethod.POST,produces={"application/json;charset=UTF-8"})  
-	public ResponsePOJO register(@RequestBody @Valid BsCompany entity){
+	public ResponsePOJO register(@RequestBody @Valid BsCompanyBo entity){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		if(entity.getCompanyId()!=0){
 			log.debug("系统出错,注册id不为空");
@@ -49,12 +52,12 @@ public class CompanyControllerforREST {
 			return responsePOJO;
 		}
 		try{
-			BsCompany bsCompany = bsCompanySV.registeredCompany(entity);
-			if(bsCompany.getCompanyId() != 0){
+			BsCompanyBo BsCompanyBo = BsCompanyBoSV.registeredCompany(entity);
+			if(BsCompanyBo.getCompanyId() != 0){
 				log.debug("公司注册成功");
 				responsePOJO.setResult(true);
 				responsePOJO.setMessage("注册成功");
-				responsePOJO.setData(bsCompany);
+				responsePOJO.setData(BsCompanyBo);
 			}
 		} catch (PersistenceException e) {
 			log.error("可能该邮箱已被注册");
@@ -86,13 +89,13 @@ public class CompanyControllerforREST {
 			return responsePOJO;
 		}
 		try {
-			BsCompany bsCompany = bsCompanySV.login(email);
-			if(bsCompany != null){
-				if(bsCompany.getPassword().equals(password)){
+			BsCompanyBo BsCompanyBo = BsCompanyBoSV.login(email);
+			if(BsCompanyBo != null){
+				if(BsCompanyBo.getPassword().equals(password)){
 					log.debug("登录成功");
 					responsePOJO.setResult(true);
 					responsePOJO.setMessage("登录成功");
-					responsePOJO.setData(bsCompany);
+					responsePOJO.setData(BsCompanyBo);
 				}else{
 					log.debug("密码错误");
 					responsePOJO.setResult(false);
@@ -124,7 +127,7 @@ public class CompanyControllerforREST {
 	 * @return	成功返回true
 	 */
 	@RequestMapping(value="/{id}", method=RequestMethod.PUT, produces={"application/json;charset=UTF-8"})  
-	public ResponsePOJO modifyCompanyInfo(@PathVariable Integer id,@RequestBody @Valid BsCompany entity){
+	public ResponsePOJO modifyCompanyInfo(@PathVariable Integer id,@RequestBody @Valid BsCompanyBo entity){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		if(id == 0){
 			log.debug("修改公司的id为0");
@@ -140,11 +143,11 @@ public class CompanyControllerforREST {
 		}
 		try {
 			entity.setCompanyId(id);
-			BsCompany bsCompany = bsCompanySV.modifyCompanyInfo(entity);
+			BsCompanyBo BsCompanyBo = BsCompanyBoSV.modifyCompanyInfo(entity);
 			log.debug("修改成功");
 			responsePOJO.setResult(true);
 			responsePOJO.setMessage("修改成功");
-			responsePOJO.setData(bsCompany);
+			responsePOJO.setData(BsCompanyBo);
 		}catch(Exception e){
 			log.debug(e.getMessage());
 			responsePOJO.setResult(false);
@@ -164,7 +167,7 @@ public class CompanyControllerforREST {
 	public ResponsePOJO removeCompany(@PathVariable Integer id){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		try {
-			bsCompanySV.removeCompany(id);
+			BsCompanyBoSV.removeCompany(id);
 			log.debug("删除成功");
 			responsePOJO.setResult(true);
 			responsePOJO.setMessage("删除成功");
@@ -191,7 +194,7 @@ public class CompanyControllerforREST {
 	public List<String> getCompanyByName(String name){
 		List<String> result = new ArrayList<String>();
 		try {
-			result = bsCompanySV.getCompanyByName(name);
+			result = BsCompanyBoSV.getCompanyByName(name);
 			log.debug("查询成功");
 		} catch (Exception e) {
 			log.debug("查询失败");
@@ -210,7 +213,7 @@ public class CompanyControllerforREST {
 	public List<String> getCompanyByEmail(String email){
 		List<String> result = new ArrayList<String>();
 		try {
-			result = bsCompanySV.getCompanyByEmail(email);
+			result = BsCompanyBoSV.getCompanyByEmail(email);
 			log.debug("查询成功");
 		} catch (Exception e) {
 			log.debug("查询失败");
@@ -229,7 +232,7 @@ public class CompanyControllerforREST {
 	public ResponsePOJO getCompanyById(@PathVariable Integer id){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		try {
-			BsCompany companyById = bsCompanySV.getCompanyById(id);
+			BsCompanyBo companyById = BsCompanyBoSV.getCompanyById(id);
 			if(companyById != null){
 				log.debug("查询成功");
 				responsePOJO.setResult(true);

@@ -1,9 +1,10 @@
 package org.clock.bs.controller;
 
+import org.clock.bs.param.ResponsePOJO;
+import org.clock.bs.entity.BsCompanyBo;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.clock.bs.entity.BsCompany;
-import org.clock.bs.param.ResponsePOJO;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,11 +14,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 @RunWith(SpringJUnit4ClassRunner.class) 
-@ContextConfiguration(locations={"file:src/main/resources/spring-dubbo-consumer.xml","file:src/main/resources/spring-mvc.xml"})  
+@ContextConfiguration(locations={"classpath:spring-mvc.xml"})
 public class CompanyControllerTest {
 transient final static private Log log = LogFactory.getLog(CompanyControllerTest.class);
 	@Autowired
-	private CompanyControllerforREST company;
+	private CompanyControllerForREST company;
 
 	@Before
 	public void setUp() throws Exception {
@@ -37,10 +38,10 @@ transient final static private Log log = LogFactory.getLog(CompanyControllerTest
 	
 	@Test//通过
 	public void testRegister(){
-		BsCompany entity = new BsCompany();
+		BsCompanyBo entity = new BsCompanyBo();
 		entity.setCompanyName("杭州数码");
-		entity.setEmail("shuma.com");
-		entity.setPassword("shuma");
+		entity.setEmail("shuma.com2");
+		entity.setPassword("shuma2");
 		entity.setPhone("0432-110");
 		ResponsePOJO register = company.register(entity);
 		log.debug("=========================testRegister测试通过"+register);

@@ -1,8 +1,7 @@
 package org.clock.bs.api;
 
 import java.util.List;
-
-import org.clock.bs.entity.BsCompany;
+import org.clock.bs.entity.BsCompanyBo;
 
 public interface IBsCompanySV {
 	/**
@@ -12,7 +11,7 @@ public interface IBsCompanySV {
 	 * @return	成功注册返回true<br>
 	 * 			失败抛出异常
 	 */
-	public BsCompany registeredCompany(BsCompany entity) throws Exception;
+	public BsCompanyBo registeredCompany(BsCompanyBo entity) throws Exception;
 	
 	/**
 	 * 公司登录
@@ -22,7 +21,7 @@ public interface IBsCompanySV {
 	 * 			登录失败:公司未注册返回null
 	 * @throws Exception 查询结果为多个值时抛出SVException
 	 */
-	public BsCompany login(String email) throws Exception;
+	public BsCompanyBo login(String email) throws Exception;
 	
 	/**
 	 * 修改公司信息
@@ -31,7 +30,7 @@ public interface IBsCompanySV {
 	 * @return	修改成功:返回新的公司信息<br>
 	 * 			修改失败:抛出异常
 	 */
-	public BsCompany modifyCompanyInfo(BsCompany entity) throws Exception;
+	public BsCompanyBo modifyCompanyInfo(BsCompanyBo entity) throws Exception;
 	
 	/**
 	 * 公司注销<BR>
@@ -48,7 +47,7 @@ public interface IBsCompanySV {
 	 * @param id	公司id
 	 * @return	返回公司实体类
 	 */
-	public BsCompany getCompanyById(int id) throws Exception;
+	public BsCompanyBo getCompanyById(int id) throws Exception;
 	
 	/**
 	 * 获取公司名称集合
