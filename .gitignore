@@ -30,14 +30,3 @@ target/
 # system ignore
 .DS_Store
 Thumbs.db
-
-
-.idea/
-.settings/
-
-clock-pojo/target/
-clock-utils/target/
-clock-dubbo-api/target/
-clock-biz/target/
-clock-web/clcok-controller/target/
-clock-web/clock-page/target/
