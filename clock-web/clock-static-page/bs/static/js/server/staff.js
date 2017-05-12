@@ -1,27 +1,15 @@
 //本地接口别名
-var StaffApiURL = "/RESTApi/staff/";
+var RESTApiURL = "/RESTApi/staff/";
 
-// 提交报销单
-function submitConsumeForm(consumptionData) {
-	var result;
-    Ajax.postJsonSync(StaffApiURL + "submitConsumeForm", consumptionData,
+// 公司注册
+function register_company(email,password) {
+    var param = { "companyName": "hangzhoushuma", "email": "45678", "password": "12345", "phone": "0432-1234" };
+    Ajax.postJson(RESTApiURL + "register", param,
         function(json, status) {
-        	result = json;
+            alert(json.message);
         }
     ); //END ajax
-    return result;
-} //END $("#submitConsumeForm").function
-
-
-
-
-
-
-
-
-
-
-
+} //END $("#register_company").function
 
 // 公司删除
 function remove_company(){

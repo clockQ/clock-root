@@ -18,9 +18,6 @@ public class BsProjectBo implements Serializable {
     private Integer budget;
     private Integer balance;
     private Byte available;
-    private String site;
-    private String closeMessage;
-    private Integer headerId;
 
     @Id
     @Column(name = "project_id")
@@ -146,35 +143,5 @@ public class BsProjectBo implements Serializable {
                 ", balance=" + balance +
                 ", available=" + available +
                 '}';
-    }
-
-    @Basic
-    @Column(name = "site")
-    public String getSite() {
-        return site;
-    }
-
-    public void setSite(String site) {
-        this.site = site;
-    }
-
-    @Basic
-    @Column(name = "closeMessage")
-    public String getCloseMessage() {
-        return closeMessage;
-    }
-
-    public void setCloseMessage(String closeMessage) {
-        this.closeMessage = closeMessage;
-    }
-
-    @Basic
-    @Column(name = "header_id")
-    public Integer getHeaderId() {
-        return headerId;
-    }
-
-    public void setHeaderId(Integer headerId) {
-        this.headerId = headerId;
     }
 }

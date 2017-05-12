@@ -7,7 +7,7 @@ import java.io.Serializable;
  * Created by clock on 2017/4/13.
  */
 @Entity
-@Table(name = "bs_company", schema = "clock_bs", catalog = "")
+@Table(name = "bs_company", schema = "clock_bs")
 public class BsCompanyBo implements Serializable {
     private int companyId;
     private String companyName;

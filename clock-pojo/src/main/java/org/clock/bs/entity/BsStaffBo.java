@@ -4,25 +4,23 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by clock on 2017/5/3.
+ * Created by clock on 2017/4/13.
  */
 @Entity
-@Table(name = "bs_staff", schema = "clock_bs", catalog = "")
-public class BsStaffBo implements Serializable {
+@Table(name = "bs_staff", schema = "clock_bs")
+public class BsStaffBo  implements Serializable {
     private int staffId;
-    private String loginEmail;
-    private String loginPassword;
-    private String staffName;
+    private String email;
+    private String password;
+    private String name;
     private String userNumber;
     private Integer companyId;
     private String companyName;
     private String phone;
-    private Integer superior;
-    private Integer staffLeave;
+    private String leave;
 
     @Id
     @Column(name = "STAFF_ID")
-    @GeneratedValue(strategy=GenerationType.AUTO)
     public int getStaffId() {
         return staffId;
     }
@@ -32,33 +30,33 @@ public class BsStaffBo implements Serializable {
     }
 
     @Basic
-    @Column(name = "LOGIN_EMAIL")
-    public String getLoginEmail() {
-        return loginEmail;
+    @Column(name = "EMAIL")
+    public String getEmail() {
+        return email;
     }
 
-    public void setLoginEmail(String loginEmail) {
-        this.loginEmail = loginEmail;
-    }
-
-    @Basic
-    @Column(name = "LOGIN_PASSWORD")
-    public String getLoginPassword() {
-        return loginPassword;
-    }
-
-    public void setLoginPassword(String loginPassword) {
-        this.loginPassword = loginPassword;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     @Basic
-    @Column(name = "STAFF_NAME")
-    public String getStaffName() {
-        return staffName;
+    @Column(name = "PASSWORD")
+    public String getPassword() {
+        return password;
     }
 
-    public void setStaffName(String staffName) {
-        this.staffName = staffName;
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    @Basic
+    @Column(name = "NAME")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
@@ -102,23 +100,13 @@ public class BsStaffBo implements Serializable {
     }
 
     @Basic
-    @Column(name = "SUPERIOR")
-    public Integer getSuperior() {
-        return superior;
+    @Column(name = "LEAVE")
+    public String getLeave() {
+        return leave;
     }
 
-    public void setSuperior(Integer superior) {
-        this.superior = superior;
-    }
-
-    @Basic
-    @Column(name = "STAFF_LEAVE")
-    public Integer getStaffLeave() {
-        return staffLeave;
-    }
-
-    public void setStaffLeave(Integer staffLeave) {
-        this.staffLeave = staffLeave;
+    public void setLeave(String leave) {
+        this.leave = leave;
     }
 
     @Override
@@ -129,17 +117,15 @@ public class BsStaffBo implements Serializable {
         BsStaffBo bsStaffBo = (BsStaffBo) o;
 
         if (staffId != bsStaffBo.staffId) return false;
-        if (loginEmail != null ? !loginEmail.equals(bsStaffBo.loginEmail) : bsStaffBo.loginEmail != null) return false;
-        if (loginPassword != null ? !loginPassword.equals(bsStaffBo.loginPassword) : bsStaffBo.loginPassword != null)
-            return false;
-        if (staffName != null ? !staffName.equals(bsStaffBo.staffName) : bsStaffBo.staffName != null) return false;
+        if (email != null ? !email.equals(bsStaffBo.email) : bsStaffBo.email != null) return false;
+        if (password != null ? !password.equals(bsStaffBo.password) : bsStaffBo.password != null) return false;
+        if (name != null ? !name.equals(bsStaffBo.name) : bsStaffBo.name != null) return false;
         if (userNumber != null ? !userNumber.equals(bsStaffBo.userNumber) : bsStaffBo.userNumber != null) return false;
         if (companyId != null ? !companyId.equals(bsStaffBo.companyId) : bsStaffBo.companyId != null) return false;
         if (companyName != null ? !companyName.equals(bsStaffBo.companyName) : bsStaffBo.companyName != null)
             return false;
         if (phone != null ? !phone.equals(bsStaffBo.phone) : bsStaffBo.phone != null) return false;
-        if (superior != null ? !superior.equals(bsStaffBo.superior) : bsStaffBo.superior != null) return false;
-        if (staffLeave != null ? !staffLeave.equals(bsStaffBo.staffLeave) : bsStaffBo.staffLeave != null) return false;
+        if (leave != null ? !leave.equals(bsStaffBo.leave) : bsStaffBo.leave != null) return false;
 
         return true;
     }
@@ -147,15 +133,29 @@ public class BsStaffBo implements Serializable {
     @Override
     public int hashCode() {
         int result = staffId;
-        result = 31 * result + (loginEmail != null ? loginEmail.hashCode() : 0);
-        result = 31 * result + (loginPassword != null ? loginPassword.hashCode() : 0);
-        result = 31 * result + (staffName != null ? staffName.hashCode() : 0);
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (password != null ? password.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (userNumber != null ? userNumber.hashCode() : 0);
         result = 31 * result + (companyId != null ? companyId.hashCode() : 0);
         result = 31 * result + (companyName != null ? companyName.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
-        result = 31 * result + (superior != null ? superior.hashCode() : 0);
-        result = 31 * result + (staffLeave != null ? staffLeave.hashCode() : 0);
+        result = 31 * result + (leave != null ? leave.hashCode() : 0);
         return result;
+    }
+
+    @Override
+    public String toString() {
+        return "BsStaffBo{" +
+                "staffId=" + staffId +
+                ", email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", userNumber='" + userNumber + '\'' +
+                ", companyId=" + companyId +
+                ", companyName='" + companyName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", leave='" + leave + '\'' +
+                '}';
     }
 }

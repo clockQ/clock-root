@@ -1,4 +1,4 @@
-package org.clock.bs.utils;
+package org.clock.bs.server;
 
 import org.I0Itec.zkclient.exception.ZkTimeoutException;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

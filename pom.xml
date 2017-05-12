@@ -26,7 +26,7 @@
 		<!--指定Maven用什么编码来呈现站点的HTML文件 -->
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.7</java.version>
-	<mysql.version>5.1.6</mysql.version>
+		<mysql.version>5.1.6</mysql.version>
 		<hibernate.version>4.3.6.Final</hibernate.version>
 		<hibernate-validator.version>4.2.0.Final</hibernate-validator.version>  
 		<spring.version>4.1.2.RELEASE</spring.version>
@@ -38,7 +38,6 @@
 		<jackson.version>2.2.2</jackson.version>
 		<servlet.version>2.5</servlet.version>
 		<shiro.version>1.2.3</shiro.version>
-		<activiti.version>5.17.0</activiti.version>
 	</properties>
 
 	<!-- 添加私有仓库 -->
@@ -258,24 +257,7 @@
 				<version>${shiro.version}</version>
 			</dependency>
 			<!-- END shiro -->
-
-			<!--流程管理-->
-			<dependency>
-				<groupId>org.activiti</groupId>
-				<artifactId>activiti-engine</artifactId>
-				<version>${activiti.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.activiti</groupId>
-				<artifactId>activiti-bpmn-layout</artifactId>
-				<version>${activiti.version}</version>
-			</dependency>
-			<dependency>
-				<groupId>org.activiti</groupId>
-				<artifactId>activiti-spring</artifactId>
-				<version>${activiti.version}</version>
-			</dependency>
-			<!-- END ACTIVITY -->
+			
 		</dependencies>
 	</dependencyManagement>
 

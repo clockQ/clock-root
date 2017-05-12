@@ -2,7 +2,6 @@ package org.clock.bs.api;
 
 import java.util.List;
 import org.clock.bs.entity.BsCompanyBo;
-import org.clock.bs.entity.BsStaffBo;
 
 public interface IBsCompanySV {
 	/**
@@ -65,29 +64,4 @@ public interface IBsCompanySV {
 	 * @return	返回符合条件的公司邮箱结果集
 	 */
 	public List<String> getCompanyByEmail(String email) throws Exception;
-
-	/**
-	 * 添加员工
-	 * @return	存入的员工实体
-	 * @throws Exception
-     */
-	public BsStaffBo addStaff(BsStaffBo entity) throws Exception;
-
-	/**
-	 * 修改员工信息
-	 *
-	 * @param entity	要修改员工的实体引用
-	 * @return	修改成功:返回新的员工信息<br>
-	 * 			修改失败:抛出异常
-	 */
-	public BsStaffBo modifyStaffInfo(BsStaffBo entity) throws Exception;
-
-	/**
-	 * 删除员工<BR>
-	 *
-	 * @param id	要删除的员工id
-	 * @return	成功删除返回true<br>
-	 * 			失败抛出异常
-	 */
-	public boolean removeStaff(int id) throws Exception;
 }

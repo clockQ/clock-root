@@ -44,12 +44,12 @@ function initMenu(level) {
               }
             }  
           }else{
-            toastr.error(json.message);
+            alert(json.message);
           }
         },
         error: function() {
           $("#side-menu li").show();
-          toastr.error("网络异常");
+          alert("网络异常");
         }
     });
 } //END $("#initMenu").function

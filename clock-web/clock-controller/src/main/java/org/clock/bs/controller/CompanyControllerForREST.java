@@ -28,7 +28,7 @@ import com.alibaba.dubbo.config.annotation.Reference;
 public class CompanyControllerForREST {
 	transient final static private Log log = LogFactory.getLog(CompanyControllerForREST.class);
 	@Reference(version = "1.0.0") 
-	private IBsCompanySV bsCompanySV;
+	private IBsCompanySV BsCompanyBoSV;
 
 	/**
 	 * 注册公司账号
@@ -52,7 +52,7 @@ public class CompanyControllerForREST {
 			return responsePOJO;
 		}
 		try{
-			BsCompanyBo BsCompanyBo = bsCompanySV.registeredCompany(entity);
+			BsCompanyBo BsCompanyBo = BsCompanyBoSV.registeredCompany(entity);
 			if(BsCompanyBo.getCompanyId() != 0){
 				log.debug("公司注册成功");
 				responsePOJO.setResult(true);
@@ -89,7 +89,7 @@ public class CompanyControllerForREST {
 			return responsePOJO;
 		}
 		try {
-			BsCompanyBo BsCompanyBo = bsCompanySV.login(email);
+			BsCompanyBo BsCompanyBo = BsCompanyBoSV.login(email);
 			if(BsCompanyBo != null){
 				if(BsCompanyBo.getPassword().equals(password)){
 					log.debug("登录成功");
@@ -143,7 +143,7 @@ public class CompanyControllerForREST {
 		}
 		try {
 			entity.setCompanyId(id);
-			BsCompanyBo BsCompanyBo = bsCompanySV.modifyCompanyInfo(entity);
+			BsCompanyBo BsCompanyBo = BsCompanyBoSV.modifyCompanyInfo(entity);
 			log.debug("修改成功");
 			responsePOJO.setResult(true);
 			responsePOJO.setMessage("修改成功");
@@ -167,7 +167,7 @@ public class CompanyControllerForREST {
 	public ResponsePOJO removeCompany(@PathVariable Integer id){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		try {
-			bsCompanySV.removeCompany(id);
+			BsCompanyBoSV.removeCompany(id);
 			log.debug("删除成功");
 			responsePOJO.setResult(true);
 			responsePOJO.setMessage("删除成功");
@@ -194,7 +194,7 @@ public class CompanyControllerForREST {
 	public List<String> getCompanyByName(String name){
 		List<String> result = new ArrayList<String>();
 		try {
-			result = bsCompanySV.getCompanyByName(name);
+			result = BsCompanyBoSV.getCompanyByName(name);
 			log.debug("查询成功");
 		} catch (Exception e) {
 			log.debug("查询失败");
@@ -213,7 +213,7 @@ public class CompanyControllerForREST {
 	public List<String> getCompanyByEmail(String email){
 		List<String> result = new ArrayList<String>();
 		try {
-			result = bsCompanySV.getCompanyByEmail(email);
+			result = BsCompanyBoSV.getCompanyByEmail(email);
 			log.debug("查询成功");
 		} catch (Exception e) {
 			log.debug("查询失败");
@@ -232,7 +232,7 @@ public class CompanyControllerForREST {
 	public ResponsePOJO getCompanyById(@PathVariable Integer id){
 		ResponsePOJO responsePOJO = new ResponsePOJO();
 		try {
-			BsCompanyBo companyById = bsCompanySV.getCompanyById(id);
+			BsCompanyBo companyById = BsCompanyBoSV.getCompanyById(id);
 			if(companyById != null){
 				log.debug("查询成功");
 				responsePOJO.setResult(true);

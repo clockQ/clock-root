@@ -1,6 +1,5 @@
 package org.clock.bs.server;
 
-import org.clock.bs.entity.BsStaffBo;
 import org.clock.bs.ex.SVException;
 import org.clock.bs.entity.BsCompanyBo;
 
@@ -119,29 +118,5 @@ public class BsCompanySVTest {
 			e.printStackTrace();
 		}
 		log.debug("=========================testRegisteredCompany测试通过");
-	}
-
-	@Test
-	public void testAddStaff() {
-		BsStaffBo entity = new BsStaffBo();
-		try {
-			entity.setLoginEmail("lipw2@asiainfo.com");
-			entity.setLoginPassword("123qwe");
-			entity.setStaffName("name333");
-			entity.setUserNumber("33804");
-			entity.setCompanyId(1);
-			entity.setCompanyName("aa");
-			entity.setPhone("123");
-			entity.setSuperior(1);
-			entity.setStaffLeave(1);
-			entity = BsCompanySV.addStaff(entity);
-			log.debug("员工添加成功"+entity);
-		} catch (PersistenceException e) {
-			log.error("可能该邮箱已被使用");
-		} catch (Exception e) {
-			log.error(e.getMessage());
-			e.printStackTrace();
-		}
-		log.debug("=========================testAddStaff测试通过");
 	}
 }

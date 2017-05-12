@@ -151,7 +151,7 @@ public class CommonDaoTest {
 		System.out.println(commonDao.getCount(BsCompanyBo.class));
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testSave() throws Exception{
 		BsCompanyBo entity = new BsCompanyBo();
 //		entity.setCompanyId(99999999);
@@ -166,7 +166,7 @@ public class CommonDaoTest {
 		}
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testRemove(){
 		BsCompanyBo entity = new BsCompanyBo();
 		entity.setCompanyId(10);
@@ -178,7 +178,7 @@ public class CommonDaoTest {
 		}
 	}
 	
-//	@Test//通过
+	@Test//通过
 	public void testRemove2(){
 		try {
 			commonDao.remove(BsCompanyBo.class,11);
@@ -187,7 +187,7 @@ public class CommonDaoTest {
 		}
 	}
 
-//	@Test//通过
+	@Test//通过
 	public void testAdd() {
 		BsCompanyBo entity = new BsCompanyBo();
 //		entity.setCompanyId(2);//主键自增
