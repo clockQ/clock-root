@@ -20,6 +20,13 @@ var Ajax = (function(){
 			this.ajax(url, 'post', JSON.stringify(param), 'json', "application/json;charset=utf-8", callback, true);
 		},
 
+		/**
+		 * 使用post方法提交json的同步请求
+		 */
+		postJsonSync : function(url, param, callback) {
+			this.ajax(url, 'post', JSON.stringify(param), 'json', "application/json;charset=utf-8", callback, false);
+		},
+
 		//不传json而是传字符串,如果action采用string为参数接收时使用
 		postParam : function(url, param, callback) {
 			this.ajax(url, 'post', param, 'json', 'application/x-www-form-urlencoded;charset=utf-8', callback, true);
@@ -34,6 +41,17 @@ var Ajax = (function(){
 		 */
 		getParam : function(url, param, callback) {
 			this.ajax(url, 'get', param, 'json', 'application/x-www-form-urlencoded;charset=utf-8', callback, true);
+		},
+
+		/**
+		 * 使用get方法提交字符串的同步请求
+		 * @param  {[type]}   url      [请求地址]
+		 * @param  {[type]}   param    [字符串,可以为空,操作的id直接写入url]
+		 * @param  {Function} callback [回调函数function(json,status){}]
+		 * @return {[type]}            [description]
+		 */
+		getParamSync : function(url, param, callback) {
+			this.ajax(url, 'get', param, 'json', 'application/x-www-form-urlencoded;charset=utf-8', callback, false);
 		},
 
 		/**

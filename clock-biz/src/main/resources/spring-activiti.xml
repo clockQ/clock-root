@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- spring负责创建流程引擎的配置文件 -->
+    <bean id="processEngineConfiguration" class="org.activiti.spring.SpringProcessEngineConfiguration">
+        <!-- 数据源 -->
+        <property name="dataSource" ref="dataSource" />
+        <!-- 配置事务管理器，统一事务 -->
+        <property name="transactionManager" ref="txManager" />
+        <!-- 设置建表策略，如果没有表，自动创建表 -->
+        <property name="databaseSchemaUpdate" value="true" />
+        <property name="deploymentResources" value="classpath*:/bpmn/*.bpmn" />
+    </bean>
+
+    <!-- 创建流程引擎对象ProcessEngine -->
+    <bean id="processEngine" class="org.activiti.spring.ProcessEngineFactoryBean">
+        <property name="processEngineConfiguration" ref="processEngineConfiguration" />
+    </bean>
+
+    <!-- 由流程引擎对象，提供的方法，创建项目中使用的Activiti工作流的Service -->
+    <!-- 管理流程仓库,用来部署,删除,读取流程资源  -->
+    <bean id="repositoryService" factory-bean="processEngine" factory-method="getRepositoryService" />
+    <!-- 用来处理正在运行状态的流程实例,任务等 -->
+    <bean id="runtimeService" factory-bean="processEngine" factory-method="getRuntimeService" />
+    <!-- 身份验证,用户和组的添加和删除 -->
+    <bean id="identityService" factory-bean="processEngine" factory-method="getIdentityService" />
+    <!-- 任务,用来管理,查询任务,如签收,指派,办理等 -->
+    <bean id="taskService" factory-bean="processEngine" factory-method="getTaskService" />
+    <!-- 历史,可以查询历史数据,如流程实例,任务,活动,变量,附件等 -->
+    <bean id="historyService" factory-bean="processEngine" factory-method="getHistoryService" />
+    <!-- 表单,用来读取和流程,任务相关的表单数据 -->
+    <bean id="formService" factory-bean="processEngine" factory-method="getFormService" />
+</beans>

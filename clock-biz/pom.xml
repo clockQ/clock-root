@@ -40,7 +40,21 @@
 			<groupId>com.101tec</groupId>
 			<artifactId>zkclient</artifactId>
 		</dependency>
+		<!--流程管理-->
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-engine</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-bpmn-layout</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.activiti</groupId>
+			<artifactId>activiti-spring</artifactId>
+		</dependency>
 	</dependencies>
+
 	<build>
 		<finalName>Dubbo-Provider</finalName>
 		<plugins>
@@ -53,7 +67,7 @@
 					</descriptorRefs>
 					<archive>
 						<manifest>
-							<mainClass>org.clock.bs.server.StartDubboServer</mainClass>
+							<mainClass>org.clock.bs.utils.StartDubboServer</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

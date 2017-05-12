@@ -6,51 +6,132 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>INSPINIA | Login</title>
+    <title>登录</title>
 
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-
-    <link href="css/animate.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="../static/module/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../static/module/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="../static/css/plugins/toastr/toastr.min.css" rel="stylesheet">
+    <link href="../static/css/animate.css" rel="stylesheet">
+    <link href="../static/css/style.css" rel="stylesheet">
 
 </head>
+<style>
+.zhezhao {
+    width:100%;
+    height:100%;
+    background-color:#000;
+    position:absolute;
+    top:0;
+    left:0;
+    z-index:2;
+    opacity:0.3;
+    /*兼容IE8及以下版本浏览器*/
+    filter: alpha(opacity=30);
+}
+
+.loading{  
+    position: absolute;
+    top: 45%;  
+    left: 40%;
+    font-size: 60px;
+}
+</style>
+<!--预加载JS库-->
+<script type="text/javascript" src="../static/module/jquery/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../static/module/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../static/module/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="../static/module/i18next-1.11.2.min.js"></script>
+<script src="../static/js/page/common.js"></script>
+<script type="text/javascript">
+//初始化
+$(document).ready(function() {
+    //初始化汉字
+    initI18n();
+});
+</script>
 
 <body class="gray-bg">
 
     <div class="middle-box text-center loginscreen animated fadeInDown">
         <div>
             <div>
-
-                <h1 class="logo-name">IN+</h1>
-
+                <h1 class="logo-name">BS+</h1>
             </div>
-            <h3>Welcome to IN+</h3>
-            <p>Perfectly designed and precisely prepared admin theme with over 50 pages with extra new web app views.
-                <!--Continually expanded and constantly improved Inspinia Admin Them (IN+)-->
+            <h3 data-i18n="login.welcome">Welcome to BS+ GraduationProject</h3>
+            <p>
+
             </p>
-            <p>Login in. To see it in action.</p>
-            <form class="m-t" role="form" action="index.html">
+            <p>请输入邮箱和密码登录系统</p>
+            <form class="m-t" role="form" >
                 <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Username" required="">
+                    <input type="email" id="email" class="form-control" placeholder="123@asiainfo.com" required="">
                 </div>
                 <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password" required="">
+                    <input type="password" id="password" class="form-control" placeholder="Password" required="">
                 </div>
-                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+                <button type="submit" class="btn btn-primary block full-width m-b" data-i18n="login.login">Login</button>
 
                 <a href="login.html#"><small>Forgot password?</small></a>
                 <p class="text-muted text-center"><small>Do not have an account?</small></p>
-                <a class="btn btn-sm btn-white btn-block" href="register.html">Create an account</a>
+                <a class="btn btn-sm btn-white btn-block" href="register.html">Register an account</a>
             </form>
-            <p class="m-t"> <small>Inspinia we app framework base on Bootstrap 3 &copy; 2014</small> </p>
+            <p class="m-t"> <small>Completion time for 2017 @clock</small> </p>
         </div>
     </div>
 
-    <!-- Mainly scripts -->
-    <script src="js/jquery-2.1.1.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
+    <!-- 等待遮罩层 -->
+    <div id="loginLoading" style="display:none">
+      <div class="zhezhao"></div> 
+      <div class="loading text-muted" data-i18n="login.loginLoading">Loading</div>
+    </div>
 </body>
 
 </html>
+<!-- 弹框插件 -->
+<script type="text/javascript" src="../static/js/plugins/toastr/toastr.min.js"></script>
+
+<script src="../static/js/server/login.js"></script>
+
+<script>
+//设置弹框位置
+toastr.options.positionClass = 'toast-top-center';
+
+$("form").submit(function(e){
+    var email = $("#email");  
+    var password = $("#password"); 
+    var msg = "";
+    if ($.trim(email.val()) == "") {
+        msg = "用户名不能为空！";
+        email.focus();
+    } else if (!/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/ .test($.trim(email.val()))) {
+        msg = "邮箱格式不正确！";
+        email.focus();
+    } else if ($.trim(password.val()) == "") {
+        msg = "密码不能为空！";
+        password.focus();
+    } else if (!/^\w{6,20}$/.test($.trim(password.val()))) {
+        msg = "密码格式不正确！";
+        password.focus();
+    }
+    if(msg != ""){
+        toastr.warning(msg);
+        return false;
+    }
+    //启动遮罩
+    $('#loginLoading').show();
+    //调用login.js中的通用登录
+    login(email.val(),password.val());
+    $('#loginLoading').hide();
+    if(loginErrorMessage==""){
+        toastr.error("网络异常");
+    }
+    return false;
+});
+
+// 为document绑定onkeydown事件监听是否按了回车键  
+$(document).keydown(function(event){  
+  if (event.keyCode === 13){ // 按了回车键  
+    $("#loginBtn").trigger("click");  
+  }  
+}); 
+</script>
