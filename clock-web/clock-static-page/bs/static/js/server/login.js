@@ -1,27 +1,24 @@
 //本地接口别名
 var RESTApiURL = "/RESTApi/";
 
-// 登陆成功跳转到index.html
+var loginErrorMessage = "";
+// 登陆成功跳转到consumeForm.html
 function login(email, password) {
     var param = "email=" + email + "&password=" + password;
-    $('#loginLoading').show();
     $.ajax({
         url: RESTApiURL + 'company/login',
         type: 'post',
         async: false,
         data: param,
-        timeout: 60000,
+        timeout: 6000,
         success: function(json) {
-            $('#loginLoading').hide();
             if (json.result) {
-                window.location.href = "./index.html";
-            } else {
-                toastr.info(json.message);
+                //保存登录人的等级
+                $.cookie('loginRole', 0); 
+                //保存登录人的id
+                $.cookie('loginRoleId', json.data.companyId); 
+                window.location.href = "./consumeForm.html";
             }
-        },
-        error: function() {
-            $('#loginLoading').hide();
-            toastr.error("网络异常");
         }
     });
     $.ajax({
@@ -29,18 +26,18 @@ function login(email, password) {
         type: 'post',
         async: false,
         data: param,
-        timeout: 60000,
+        timeout: 6000,
         success: function(json) {
-            $('#loginLoading').hide();
             if (json.result) {
-                window.location.href = "./index.html";
+                //保存登录人的等级
+                $.cookie('loginRole', json.data.leave); 
+                //保存登录人的id
+                $.cookie('loginRoleId', json.data.staffId); 
+                window.location.href = "./consumeForm.html";
             } else {
-                toastr.info(json.message);
+                loginErrorMessage = json.message;
+                toastr.error(loginErrorMessage);
             }
-        },
-        error: function() {
-            $('#loginLoading').hide();
-            toastr.error("网络异常");
         }
     });
 

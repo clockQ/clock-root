@@ -15,7 +15,7 @@ public interface ICommonDAO {
 	 * @param entity	新增实体对象
 	 * @throws Exception
 	 */
-	public void add(Object entity) throws Exception;
+	public <T> T add(T entity) throws Exception;
 
 	/**
 	 * 在事物中删除对象,使用em.remove(em.merge(entity))
@@ -27,9 +27,9 @@ public interface ICommonDAO {
 
 	/**
 	 * 根据id删除对象
-	 * 
+	 *
+	 * @param entityClass	要删除的实体对象.class
 	 * @param id	要删除的数据id
-	 * @param entity	要删除的实体对象.class
 	 * @throws Exception
 	 */
 	public <T, ID extends Serializable> void remove(Class<T> entityClass,ID id) throws Exception;
@@ -161,4 +161,13 @@ public interface ICommonDAO {
 	 */
 	public <T> List<T> findByJPAQL(String jpaql, Map<String,Object> param, int start, int pageSize,
 			boolean needCache) throws Exception ;
+
+	/**
+	 * 调用sql语句,如存储过程
+	 * @param sql	sql查询语句
+	 * @param param	参数
+	 * @return
+	 * @throws Exception
+     */
+	public List<String> executeSQL(String sql, Map<String,Object> param) throws Exception;
 }

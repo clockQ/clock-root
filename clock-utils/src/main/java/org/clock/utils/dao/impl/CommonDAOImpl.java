@@ -27,8 +27,9 @@ public class CommonDAOImpl implements ICommonDAO{
 	private EntityManager em;
 
 	@Override
-	public void add(Object entity) throws Exception {
+	public <T> T  add(T entity) throws Exception {
 		em.persist(entity);
+		return entity;
 	}
 
 	@Override
@@ -38,7 +39,8 @@ public class CommonDAOImpl implements ICommonDAO{
 
 	@Override
 	public <T> T save(T entity) throws Exception {
-		return em.merge(entity);
+		T t = em.merge(entity);
+		return t;
 	}
 
 	/**
@@ -191,7 +193,7 @@ public class CommonDAOImpl implements ICommonDAO{
 		query.setMaxResults(pageSize);
 		return query.getResultList();
 	}
-	
+
 	/**
 	 * 获得Criteria查询的实例,用于criteria 查询
 	 * 
@@ -204,5 +206,18 @@ public class CommonDAOImpl implements ICommonDAO{
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		//获得Criteria查询的实例
 		return cb.createQuery(entityClass);
-	} 
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> executeSQL(String sql, Map<String,Object> param) throws Exception {
+		Query query = em.createNativeQuery(sql);
+		if(param!=null){
+			for(Object key : param.keySet()){
+				query.setParameter(key.toString(), param.get(key.toString()));
+			}
+		}
+		List result = query.getResultList();
+		return result;
+	}
 }

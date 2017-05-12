@@ -17,6 +17,7 @@
     <link href="../static/css/plugins/chosen/chosen.css" rel="stylesheet">
     <link href="../static/css/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet">
     <link href="../static/css/plugins/jqGrid/ui.jqgrid.css" rel="stylesheet">
+    <link href="../static/css/plugins/sweetalert/sweetalert.css" rel="stylesheet">
     <link href="../static/css/style.css" rel="stylesheet">
 </head>
 <!--预加载JS库-->
@@ -330,6 +331,7 @@ $(document).ready(function() {
                                                     <label data-i18n="consumeForm.formModal.available">Available</label>
                                                     <input id="available" type="text" class="form-control required"  readonly="readonly">
                                                 </div>
+                                                <input id="projectSite" type="text" style="display:none;">
                                             </div>
                                             <div class="col-lg-4">
                                                 <div class="text-center">
@@ -402,13 +404,13 @@ $(document).ready(function() {
                                         <div class="tabs-left row">
                                             <div class="col-xs-1">
                                                 <ul class="nav nav-tabs">
-                                                    <li class="active" style="display:block;"><a data-toggle="tab" href="#foodTabDiv"> <i class="fa fa-male"></i>餐补</a></li>
-                                                    <li class="" style="display:block;"><a data-toggle="tab" href="#accommodationTabDiv"><i class="fa fa-home"></i>房补</a></li>
-                                                    <li class="" style="display:block;"><a data-toggle="tab" href="#travelTabDiv"><i class="fa fa-bus"></i>车补</a></li>
-                                                    <button id="btnAdd" type="button" class="btn  btn-success" data-toggle="modal" data-target="#foodInfoModal">
+                                                    <li class="active" style="display:block;"><a data-toggle="tab" href="#foodTabDiv" id="foodTabBtn"> <i class="fa fa-male"></i>餐补</a></li>
+                                                    <li class="" style="display:block;"><a data-toggle="tab" href="#accommodationTabDiv" id="accommodationTabBtn"><i class="fa fa-home"></i>房补</a></li>
+                                                    <li class="" style="display:block;"><a data-toggle="tab" href="#travelTabDiv" id="travelTabBtn"><i class="fa fa-bus"></i>车补</a></li>
+                                                    <button id="btnAdd" type="button" class="btn  btn-success">
                                                         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>添加
                                                     </button>
-                                                    <button id="btnEdit" type="button" class="btn   btn-warning" data-toggle="modal" data-target="#foodInfoModal">
+                                                    <button id="btnEdit" type="button" class="btn   btn-warning">
                                                         <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>修改
                                                     </button>
                                                     <button id="btnDel" type="button" class="btn  btn-danger">
@@ -425,7 +427,7 @@ $(document).ready(function() {
                                                         <table id="foodTabel" class="table table-bordered table-striped">
                                                             <thead>  
                                                                 <th class="check-header hidden-xs">  
-                                                                <input id="checkAll" name="checkAll" type="checkbox">  
+                                                                <input id="checkFoodAll" name="checkFoodAll" type="checkbox">  
                                                           
                                                                 <th>编号</th>  
                                                                 <th>消费时间</th>  
@@ -440,12 +442,39 @@ $(document).ready(function() {
                                                 </div>
                                                 <div id="accommodationTabDiv" class="tab-pane">
                                                     <div class="panel-body" style="width:100%;margin-left:0">
-                                                     
+                                                        <table id="accommodationTabel" class="table table-bordered table-striped">
+                                                            <thead>  
+                                                                <th class="check-header hidden-xs">  
+                                                                <input id="checkAccommodationAll" name="checkAccommodationAll" type="checkbox">  
+                                                          
+                                                                <th>编号</th>  
+                                                                <th>住房时间</th>  
+                                                                <th>租房地点</th>  
+                                                                <th>房租价格</th>  
+                                                                <th>详情</th>
+                                                            </thead>  
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                                 <div id="travelTabDiv" class="tab-pane">
                                                     <div class="panel-body" style="width:100%;margin-left:0">
-                                              
+                                                        <table id="travelTabel" class="table table-bordered table-striped">
+                                                            <thead>  
+                                                                <th class="check-header hidden-xs">  
+                                                                <input id="checkTravelAll" name="checkTravelAll" type="checkbox">  
+                                                          
+                                                                <th>编号</th>  
+                                                                <th>出行时间</th>  
+                                                                <th>起始地点</th> 
+                                                                <th>目的地点</th>   
+                                                                <th>消费金额</th>  
+                                                                <th>详情</th>
+                                                            </thead>  
+                                                            <tbody>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
                                             </div>
@@ -454,9 +483,9 @@ $(document).ready(function() {
                                     </fieldset>
                                     <h1 data-i18n="consumeForm.formModal.Finish">Finish</h1>
                                     <fieldset>
-                                        <h2>Terms and Conditions</h2>
-                                        <input id="acceptTerms" name="acceptTerms" type="checkbox" class="required">
-                                        <label for="acceptTerms">I agree with the Terms and Conditions.</label>
+                                        <h1>报销总览</h1>
+                                        <h1>&nbsp&nbsp</h1>
+                                        <p id="finishP"></p>
                                     </fieldset>
                                 </form>
                             </div>
@@ -479,20 +508,85 @@ $(document).ready(function() {
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-lg-6">
+                                    <input id="foodConsumptionId" type="text" class="hidden">
                                     <h2 >消费时间</h2>
-                                    <input id="consumptionTime" type="text" class="form-control">
+                                    <input id="foodConsumptionTime" type="text" class="form-control">
                                     <h2 >消费地点</h2>
-                                    <input id="consumptionSite" type="text" class="form-control">
+                                    <input id="foodConsumptionSite" type="text" class="form-control">
                                     <h2 >消费金额</h2>
-                                    <input id="consumptionSum" type="text" class="form-control">
+                                    <input id="foodConsumptionSum" type="text" class="form-control">
                                     <h2 >详情</h2>
-                                    <input id="consumptionNote" type="text" class="form-control">
+                                    <input id="foodConsumptionNote" type="text" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                             <button type="button" class="btn btn-primary" id="foodInfoModalSubmit">提交更改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--模态框新增房补-->
+            <div class="modal inmodal" id="accommodationInfoModal"
+                role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content animated bounceInRight">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="accommodationInfoModalLabel">新增或修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input id="accommodationConsumptionId" type="text" class="hidden">
+                                    <h2 >住房时间</h2>
+                                    <input id="accommodationConsumptionTime" type="text" class="form-control">
+                                    <h2 >住房地点</h2>
+                                    <input id="accommodationConsumptionSite" type="text" class="form-control">
+                                    <h2 >住宿金额</h2>
+                                    <input id="accommodationConsumptionSum" type="text" class="form-control">
+                                    <h2 >住宿详情</h2>
+                                    <input id="accommodationConsumptionNote" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="accommodationInfoModalSubmit">提交更改</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!--模态框新增食补-->
+            <div class="modal inmodal" id="travelInfoModal"
+                role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content animated bounceInRight">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="travelInfoModalLabel">新增或修改</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <input id="travelConsumptionId" type="text" class="hidden">
+                                    <h2 >坐车时间</h2>
+                                    <input id="travelConsumptionTime" type="text" class="form-control">
+                                    <h2 >发车地点</h2>
+                                    <input id="travelConsumptionStartSite" type="text" class="form-control">
+                                    <h2 >目的地</h2>
+                                    <input id="travelConsumptionEndSite" type="text" class="form-control">
+                                    <h2 >车票价格</h2>
+                                    <input id="travelConsumptionSum" type="text" class="form-control">
+                                    <h2 >详情</h2>
+                                    <input id="travelConsumptionNote" type="text" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                            <button type="button" class="btn btn-primary" id="travelInfoModalSubmit">提交更改</button>
                         </div>
                     </div>
                 </div>
@@ -941,71 +1035,18 @@ $(document).ready(function() {
 <script src="../static/js/plugins/jqGrid/i18n/grid.locale-en.js"></script>
 <script src="../static/js/plugins/jqGrid/jquery.jqGrid.min.js"></script>
 <script src="../static/js/plugins/jquery-ui/jquery-ui.min.js"></script>
+<!-- Sweet alert -->
+<script src="../static/js/plugins/sweetalert/sweetalert.min.js"></script>
+<!-- JQuery Cookie-->
+<script type="text/javascript" src="../static/module/jquery/jquery.cookie.js"></script>
 
 <!-- 自定义js-->
 <script src="../static/js/Utils.js"></script>
+<script src="../static/js/json2.js"></script>
 <script src="../static/js/page/common.js"></script>
 <script src="../static/js/page/consumeForm.js"></script>
+<script src="../static/js/server/project.js"></script>
+<script src="../static/js/server/staff.js"></script>
 <script>
-// 渲染模态框的新增表单
-$(document).on('click', '#createFormBtn', function() {
-    initCreateForm();
-    intiDaterangepicker();
-    initSelector();
-    initFoodTable(page);
-    initAccommodationTable();
-    initTravelTable();
-});
-//刷新页面,不然下次加载css不渲染
-$("#createFormModal").on("hidden.bs.modal", function() {  
-    location.replace(document.referrer);
-}); 
-//根据项目编号查询信息按钮响应
-$(document).on('click', '#searchProjectBtn', function() {
-    initSearchProjectResult();
-});
-var page = 1;
-//食品表中的数据总数
-var foodTableSum = myFoodData.length;
-//最大页数
-var maxPage = Math.ceil(foodTableSum/10) ;
-$(document).ready(function() {
-    initFoodTable(page);
-});
-$(document).on('click', '#previousPageBtn', function() {
-    $("#nextPage").removeClass('disabled');
-    page -= 1;
-    if(page == 1){
-        $("#previousPage").addClass('disabled');
-    }
-    if(page >= 1){        
-        initFoodTable(page);
-    }else{
-        page += 1;
-    }
-});    
-$(document).on('click', '#nextPageBtn', function() {
-    $("#previousPage").removeClass('disabled');
-    page += 1;
-    if(page == maxPage){
-        $("#nextPage").addClass('disabled');
-    }
-    if(page <= maxPage){        
-        initFoodTable(page);
-    }else{
-        page -= 1;
-    }
-});
-$(document).on('click', '#btnDel', function() {
-    $('input[name="checkbox"]:checked').each(function(){ 
-        //在json中删除
-        delFoodTable($(this)[0].id);  
-    }); 
-    //重新载入table
-    initFoodTable(page);
-});
-$(document).on('click', '#btnEdit', function() {
-    alert("editors");
-    $(":checked").parent().editableTableWidget();//整行的可以编辑 
-});
+
 </script>
