@@ -4,22 +4,38 @@
     <startEvent activiti:initiator="applyUserId" id="StartEvent" name="启动流程"/>
     <userTask activiti:assignee="${staffId}" activiti:exclusive="true" id="projectHeaderApproval" name="项目经理第一审批"/>
     <userTask activiti:assignee="${staffId}" activiti:exclusive="true" id="superiorApproval" name="直属经理第二审批"/>
-    <userTask activiti:assignee="${staffId}" activiti:exclusive="true" id="financeApproval" name="财务第三审批">
+    <userTask activiti:assignee="${staffId}" activiti:exclusive="true" id="financeApproval" name="财务拨款">
       <documentation id="_6_D_1"><![CDATA[同时进行拨款,项目扣费]]></documentation>
     </userTask>
     <endEvent id="EndEvent" name="结束流程"/>
-    <sequenceFlow id="_10" name="同意" sourceRef="projectHeaderApproval" targetRef="superiorApproval">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='通过'}]]></conditionExpression>
-    </sequenceFlow>
-    <sequenceFlow id="_11" name="同意" sourceRef="superiorApproval" targetRef="financeApproval">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='通过'}]]></conditionExpression>
-    </sequenceFlow>
     <sequenceFlow id="_12" name="拨款完成" sourceRef="financeApproval" targetRef="EndEvent">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='通过'}]]></conditionExpression>
     </sequenceFlow>
     <userTask activiti:exclusive="true" id="submitConsumeForm" name="员工提交报销单"/>
     <sequenceFlow id="_4" sourceRef="StartEvent" targetRef="submitConsumeForm"/>
-    <sequenceFlow id="_5" name="提交" sourceRef="submitConsumeForm" targetRef="projectHeaderApproval"/>
+    <sequenceFlow id="_5" name="提交待经理审批" sourceRef="submitConsumeForm" targetRef="projectHeaderApproval"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="_2"/>
+    <sequenceFlow id="_3" name="驳回,通知员工" sourceRef="_2" targetRef="submitConsumeForm">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='驳回'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_6" sourceRef="projectHeaderApproval" targetRef="_2"/>
+    <sequenceFlow id="_7" name="批准,下级审批" sourceRef="_2" targetRef="superiorApproval">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='通过'}]]></conditionExpression>
+    </sequenceFlow>
+    <exclusiveGateway gatewayDirection="Unspecified" id="_8"/>
+    <sequenceFlow id="_9" sourceRef="superiorApproval" targetRef="_8"/>
+    <sequenceFlow id="_10" name="批准,下级审批" sourceRef="_8" targetRef="financeApproval">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='通过'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_11" name="驳回,通知上一审批人" sourceRef="_8" targetRef="superiorApproval">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='驳回'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_13" name="驳回,通知员工" sourceRef="_8" targetRef="projectHeaderApproval">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${checkResult=='驳回'}]]></conditionExpression>
+    </sequenceFlow>
+    <sequenceFlow id="_14" name="拨款完成,通知员工" sourceRef="financeApproval" targetRef="submitConsumeForm"/>
+    <endEvent id="_15" name="结束流程"/>
+    <sequenceFlow id="_16" name="放弃报销" sourceRef="submitConsumeForm" targetRef="_15"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=1;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
     <bpmndi:BPMNPlane bpmnElement="consumeFlow">
@@ -36,19 +52,19 @@
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="superiorApproval" id="Shape-superiorApproval">
-        <dc:Bounds height="55.0" width="85.0" x="155.0" y="315.0"/>
+        <dc:Bounds height="55.0" width="85.0" x="155.0" y="400.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="financeApproval" id="Shape-financeApproval">
-        <dc:Bounds height="55.0" width="85.0" x="155.0" y="420.0"/>
+        <dc:Bounds height="55.0" width="85.0" x="370.0" y="500.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="EndEvent" id="Shape-EndEvent">
-        <dc:Bounds height="32.0" width="32.0" x="180.0" y="535.0"/>
+        <dc:Bounds height="32.0" width="32.0" x="390.0" y="385.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
@@ -59,37 +75,110 @@
           <dc:Bounds height="55.0" width="85.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="_12" id="BPMNEdge__12" sourceElement="financeApproval" targetElement="EndEvent">
-        <di:waypoint x="196.0" y="475.0"/>
-        <di:waypoint x="196.0" y="535.0"/>
+      <bpmndi:BPMNShape bpmnElement="_2" id="Shape-_2" isMarkerVisible="false">
+        <dc:Bounds height="32.0" width="32.0" x="180.0" y="315.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_8" id="Shape-_8" isMarkerVisible="false">
+        <dc:Bounds height="32.0" width="32.0" x="185.0" y="520.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="_15" id="Shape-_15">
+        <dc:Bounds height="32.0" width="32.0" x="45.0" y="125.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="_13" id="BPMNEdge__13" sourceElement="_8" targetElement="projectHeaderApproval">
+        <di:waypoint x="185.0" y="536.0"/>
+        <di:waypoint x="55.0" y="400.0"/>
+        <di:waypoint x="155.0" y="242.5"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="StartEvent" targetElement="_3">
+      <bpmndi:BPMNEdge bpmnElement="_12" id="BPMNEdge__12" sourceElement="financeApproval" targetElement="EndEvent">
+        <di:waypoint x="406.0" y="500.0"/>
+        <di:waypoint x="406.0" y="417.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_14" id="BPMNEdge__14" sourceElement="financeApproval" targetElement="submitConsumeForm">
+        <di:waypoint x="455.0" y="527.5"/>
+        <di:waypoint x="505.0" y="335.0"/>
+        <di:waypoint x="240.0" y="137.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_16" id="BPMNEdge__16" sourceElement="submitConsumeForm" targetElement="_15">
+        <di:waypoint x="155.0" y="145.0"/>
+        <di:waypoint x="115.0" y="145.0"/>
+        <di:waypoint x="76.49193338482966" y="145.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_3" id="BPMNEdge__3" sourceElement="_2" targetElement="submitConsumeForm">
+        <di:waypoint x="212.0" y="331.0"/>
+        <di:waypoint x="320.0" y="240.0"/>
+        <di:waypoint x="240.0" y="137.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_4" id="BPMNEdge__4" sourceElement="StartEvent" targetElement="submitConsumeForm">
         <di:waypoint x="196.0" y="67.0"/>
         <di:waypoint x="196.0" y="110.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_5" id="BPMNEdge__5" sourceElement="_3" targetElement="projectHeaderApproval">
+      <bpmndi:BPMNEdge bpmnElement="_5" id="BPMNEdge__5" sourceElement="submitConsumeForm" targetElement="projectHeaderApproval">
         <di:waypoint x="197.5" y="165.0"/>
         <di:waypoint x="197.5" y="215.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="superiorApproval" targetElement="financeApproval">
-        <di:waypoint x="197.5" y="370.0"/>
-        <di:waypoint x="197.5" y="420.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_6" id="BPMNEdge__6" sourceElement="projectHeaderApproval" targetElement="_2">
+        <di:waypoint x="196.0" y="270.0"/>
+        <di:waypoint x="196.0" y="315.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="projectHeaderApproval" targetElement="superiorApproval">
-        <di:waypoint x="197.5" y="270.0"/>
-        <di:waypoint x="197.5" y="315.0"/>
+      <bpmndi:BPMNEdge bpmnElement="_7" id="BPMNEdge__7" sourceElement="_2" targetElement="superiorApproval">
+        <di:waypoint x="196.0" y="347.0"/>
+        <di:waypoint x="196.0" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_9" id="BPMNEdge__9" sourceElement="superiorApproval" targetElement="_8">
+        <di:waypoint x="201.0" y="455.0"/>
+        <di:waypoint x="201.0" y="520.0"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_11" id="BPMNEdge__11" sourceElement="_8" targetElement="superiorApproval">
+        <di:waypoint x="185.0" y="536.0"/>
+        <di:waypoint x="55.0" y="485.0"/>
+        <di:waypoint x="155.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="_10" id="BPMNEdge__10" sourceElement="_8" targetElement="financeApproval">
+        <di:waypoint x="216.0" y="535.0"/>
+        <di:waypoint x="320.0" y="535.0"/>
+        <di:waypoint x="370.0" y="535.0"/>
         <bpmndi:BPMNLabel>
           <dc:Bounds height="0.0" width="0.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
